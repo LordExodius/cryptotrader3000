@@ -89,7 +89,7 @@ public class Database implements DatabaseAuthenticate {
         return instance;
     }
 
-    // ---------------------------------------------------------------------------
+    // ----------------------------------------------------------------------------------
     // Database helper functions
 
     // add new row entry to database table creds with given username and hashed password
