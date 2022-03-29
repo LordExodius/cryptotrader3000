@@ -1,4 +1,4 @@
-package com.walterwalterwalter.cryptotrader.authentication;
+package cryptotrader.authentication;
 import java.sql.*;
 
 public class LoginServer {
