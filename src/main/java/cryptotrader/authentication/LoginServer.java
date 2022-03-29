@@ -1,6 +1,6 @@
 package cryptotrader.authentication;
 
-public class LoginServer implements LoginAuthenticate{
+public class LoginServer implements LoginAuthenticate {
     private static LoginServer instance = new LoginServer();
     private Database database;
 
