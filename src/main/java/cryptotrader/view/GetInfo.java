@@ -1,4 +1,4 @@
-package cryptotrader;
+package cryptotrader.view;
 
 public @interface GetInfo {
     public TradingBroker getBroker();
