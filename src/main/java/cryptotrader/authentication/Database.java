@@ -64,13 +64,6 @@ public class Database implements DatabaseAuthenticate {
         }
         return false;
     }
-    
-    public static void main(String args[])
-    {
-        System.out.println(getInstance().authenticate("admin", "password"));
-        System.out.println(getInstance().authenticate("admin", "notpassword"));
-        System.out.println(getInstance().authenticate("notadmin", "password"));
-    }
 
     public static Database getInstance()
     {

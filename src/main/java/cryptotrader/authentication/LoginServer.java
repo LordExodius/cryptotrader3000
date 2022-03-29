@@ -8,10 +8,6 @@ public class LoginServer implements LoginAuthenticate {
     {
         database = Database.getInstance();
     }
-    public static void main(String args[]) 
-    {
-        LoginServer test = new LoginServer();
-    }
 
     @Override
     public boolean authenticate(String username, String password) 
