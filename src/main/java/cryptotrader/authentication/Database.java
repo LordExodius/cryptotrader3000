@@ -104,25 +104,18 @@ public class Database implements DatabaseAuthenticate {
             int matches = result.getInt("total");
             result.close();
 
-            if(matches == 0)
-            {
-                String add = "INSERT INTO creds(user, pass) VALUES(?, ?)";
-                statement = connection.prepareStatement(add);
-                statement.setString(1, username);
+            String add = "INSERT INTO creds(user, pass) VALUES(?, ?)";
+            statement = connection.prepareStatement(add);
+            statement.setString(1, username);
 
-                // hash password
-                MessageDigest digest = MessageDigest.getInstance("SHA-256");
-                byte[] hash = digest.digest(password.getBytes(StandardCharsets.UTF_8));
-                String passEncoded = Base64.getEncoder().encodeToString(hash);
-                statement.setString(2, passEncoded);
+            // hash password
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hash = digest.digest(password.getBytes(StandardCharsets.UTF_8));
+            String passEncoded = Base64.getEncoder().encodeToString(hash);
+            statement.setString(2, passEncoded);
 
-                statement.executeUpdate();
-                return true;
-            }
-            else
-            {
-                System.out.println("User already exists. Not added.");
-            }
+            statement.executeUpdate();
+            return true;
         }
         catch(NoSuchAlgorithmException e)
         {
@@ -177,7 +170,7 @@ public class Database implements DatabaseAuthenticate {
 
     public static void main(String args[])
     {
-        //Database.getInstance().addUser("admin", "password");
+        Database.getInstance().addUser("admin", "password");
         // Database.getInstance().clearCreds();
         Database.getInstance().showCreds();
     }
