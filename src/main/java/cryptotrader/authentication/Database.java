@@ -170,7 +170,7 @@ public class Database implements DatabaseAuthenticate {
 
     public static void main(String args[])
     {
-        Database.getInstance().addUser("admin", "password");
+        // Database.getInstance().addUser("admin", "password");
         // Database.getInstance().clearCreds();
         Database.getInstance().showCreds();
     }
