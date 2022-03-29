@@ -18,13 +18,15 @@ public class Database implements DatabaseAuthenticate {
     // Constructor for Database class
     private Database()
     {
-        try {
+        try 
+        {
             // create connection to database file
             connection = DriverManager.getConnection("jdbc:sqlite:./db/auth.db");
         }
             
         // handle SQL exception when creating connection to database file
-        catch(SQLException e) {
+        catch(SQLException e) 
+        {
             System.out.println("An SQLException has occurred. Error message:");
             System.out.println(e);
         }
