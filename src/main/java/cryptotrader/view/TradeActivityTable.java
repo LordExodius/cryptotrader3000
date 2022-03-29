@@ -1,6 +1,6 @@
 package cryptotrader.view;
 
-public class TradeActivityTable implements Update {
+public class TradeActivityTable implements Observer {
 
     @Override
     public void update(Subject s) {

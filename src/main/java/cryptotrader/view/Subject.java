@@ -2,14 +2,16 @@ package cryptotrader.view;
 
 import java.util.ArrayList;
 
-public abstract class Subject implements ManageObservers {
+public abstract class Subject implements ModifyObservers {
     private ArrayList<Observer> observers = new ArrayList<>();
 
+    @Override
     public void attach(Observer observer) {
         observers.add(observer);
     }
 
-    public void detatch(Observer observer) {
+    @Override
+    public void detach(Observer observer) {
         observers.remove(observer);
     }
 

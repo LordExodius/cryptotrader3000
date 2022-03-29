@@ -1,4 +1,5 @@
 package cryptotrader.view;
 
-public abstract class Observer implements Update {
+public interface Observer {
+    public void update(Subject s);
 }
