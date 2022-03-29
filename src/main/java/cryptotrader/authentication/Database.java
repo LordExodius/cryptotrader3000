@@ -101,7 +101,6 @@ public class Database implements DatabaseAuthenticate {
             PreparedStatement statement = connection.prepareStatement(check);
             statement.setString(1, username);
             ResultSet result = statement.executeQuery();
-            int matches = result.getInt("total");
             result.close();
 
             String add = "INSERT INTO creds(user, pass) VALUES(?, ?)";
