@@ -1,26 +1,29 @@
 package cryptotrader.authentication;
-import java.sql.*;
 
-public class LoginServer {
-    // Select database file for user info
-    Connection connection;
+public class LoginServer implements LoginAuthenticate{
+    private static LoginServer instance = new LoginServer();
+    private Database database;
 
-    public LoginServer()
+    private LoginServer() 
     {
-        try{
-            // change path to working one
-            connection = DriverManager.getConnection("jdbc:sqlite:/db/auth.db");
-        }
-            
-        catch(SQLException e) {
-            System.out.println("An SQLException has occurred. Error message:");
-            System.out.println(e);
-        }
+        database = Database.getInstance();
     }
-
-    public static void main(String args[])
+    public static void main(String args[]) 
     {
         LoginServer test = new LoginServer();
+    }
+
+    @Override
+    public boolean authenticate(String username, String password) 
+    {
+        return database.authenticate(username, password);
+    }
+    
+    public static LoginServer getInstance() 
+    {
+        if(instance == null)
+            instance = new LoginServer();
+        return instance;
     }
     
 }
