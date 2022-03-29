@@ -1,4 +1,4 @@
-package com.walterwalterwalter.cryptotrader;
+package cryptotrader;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

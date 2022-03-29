@@ -1,4 +1,4 @@
-package com.walterwalterwalter.cryptotrader;
+package cryptotrader;
 
 /**
  * Hello world!
