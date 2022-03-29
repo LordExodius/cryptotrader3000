@@ -1,4 +1,4 @@
-package com.walterwalterwalter.cryptotrader.view;
+package cryptotrader;
 
 public @interface GetInfo {
     public TradingBroker getBroker();
