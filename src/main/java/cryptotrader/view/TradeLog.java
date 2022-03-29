@@ -8,7 +8,7 @@ public class TradeLog extends Subject implements UpdateTradeLog {
 
     public void addResults(ArrayList<TradeResult> tradeResults) {
         // TODO Auto-generated method stub
-        
+        entries.addAll(tradeResults);
     }
     
 }
