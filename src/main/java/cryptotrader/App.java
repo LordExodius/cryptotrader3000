@@ -1,4 +1,4 @@
-package cryptotrader;
+package cryptoTrader;
 
 /**
  * Hello world!
