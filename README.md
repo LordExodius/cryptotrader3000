@@ -2,28 +2,20 @@
 
 This README would normally document whatever steps are necessary to get your application up and running.
 
-### What is this repository for? ###
-
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+### Description
+Crypto paper-trading application. Built using Java, Swing, and SQLite.
 
 ### How do I get set up? ###
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
+1. Clone the repository
+2. Navigate to the root directory of the repository (`~/cryptotrader3000`)
+3. Run the maven build command `maven package` or `maven install`
+4. Navigate to the target folder `~/cryptotrader3000/target` and run the compiled `.jar` executable
 
-### Contribution guidelines ###
-
-* Writing tests
-* Code review
-* Other guidelines
 
 ### Who do I talk to? ###
 
-* Repo owner or admin
-* Other community or team contact
+* Oscar
+* David
+* Jackson
+* Ben
