@@ -1,5 +1,5 @@
 package cryptotrader.trade;
 
-public class FetchCoinAPI {
-    
+public interface FetchCoinAPI {
+
 }

@@ -2,12 +2,12 @@ package cryptotrader.trade;
 
 import cryptotrader.view.TradeResult;
 
-public abstract class TradingStrategy implements Trade {
-
+public class S1 extends TradingStrategy {
+    
     @Override
     public TradeResult trade() {
         // TODO Auto-generated 
         return null;
     }
-    
+
 }
