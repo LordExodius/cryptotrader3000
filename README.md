@@ -1,7 +1,5 @@
 # cryptotrader3000 #
 
-This README would normally document whatever steps are necessary to get your application up and running.
-
 ### Description
 Crypto paper-trading application. Built using Java, Swing, and SQLite.
 
