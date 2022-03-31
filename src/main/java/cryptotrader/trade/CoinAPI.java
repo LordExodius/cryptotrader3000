@@ -95,15 +95,24 @@ public class CoinAPI {
 	public JsonObject getData (ArrayList<String> dataIn) {
 		JsonObject outData = new JsonObject();
 
+		// Get the current date
 		Date rawDate = new Date();
 		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 		String date = formatter.format(rawDate);
 
+		// For each coin, get the relevant info, and add it to the outDate JsonObject
 		for (String coin: dataIn) {
 			double price = this.getPriceForCoin(coin, date);
 			double marketCap = this.getMarketCapForCoin(coin, date);
 			double volume = this.getVolumeForCoin(coin, date);
 
+			// // API Cooldown
+			// try {
+			// 	Thread.sleep(200);
+			// } catch (Exception e) {
+			// 	continue;
+			// }
+			
 			JsonObject coinInfo = new JsonObject();
 			coinInfo.addProperty("price", price);
 			coinInfo.addProperty("marketCap", marketCap);
