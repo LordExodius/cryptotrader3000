@@ -6,6 +6,10 @@ public class TraderList implements UpdateTraderList {
 
     private ArrayList<TradingBroker> traderList;
 
+    public TraderList () {
+        traderList = new ArrayList<TradingBroker>();
+    }
+
     @Override
     public boolean addTrader(TradingBroker newTrader) {
         // TODO Auto-generated method stub

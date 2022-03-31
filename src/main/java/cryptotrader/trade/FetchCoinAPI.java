@@ -1,5 +1,8 @@
 package cryptotrader.trade;
 
-public interface FetchCoinAPI {
+import com.google.gson.JsonObject;
+import java.util.ArrayList;
 
+public interface FetchCoinAPI {
+    public JsonObject getData(ArrayList<String> dataIn);
 }
