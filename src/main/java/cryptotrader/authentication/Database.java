@@ -49,8 +49,9 @@ public class Database implements DatabaseAuthenticate {
     @Override
     public boolean authenticate(String username, String password) 
     {
-        // Count rows with matching user/hashed password combination
+        // Retrieve salt from row with matching username
         String getSalt = "SELECT salt FROM creds WHERE user = ?";
+        // Count rows with matching user/hashed password combination
         String auth = "SELECT COUNT(*) as total FROM creds WHERE user = ? AND pass = ?";
         try 
         {
@@ -58,7 +59,7 @@ public class Database implements DatabaseAuthenticate {
             PreparedStatement saltStatement = connection.prepareStatement(getSalt);
             saltStatement.setString(1, username);
             ResultSet result = saltStatement.executeQuery();
-            if(!result.next()) // no entry exists with given username
+            if(!result.next()) // no entry exists with given username; return false
                 return false;
             String salt = result.getString("salt");
             String salted = salt + password;
@@ -107,17 +108,20 @@ public class Database implements DatabaseAuthenticate {
     // add new row entry to database table creds with given username and hashed password
     public boolean addUser(String username, String password)
     {
+        // count number of rows with matching username
         String check = "SELECT COUNT(*) as total FROM creds WHERE user = ?";
         try
         {
             PreparedStatement statement = connection.prepareStatement(check);
             statement.setString(1, username);
-            if(statement.executeQuery().getInt("total") != 0) // if count of matching user entries is not 0 (user exists)
+            // if count of matching user entries is not 0 (user exists)
+            if(statement.executeQuery().getInt("total") != 0) 
             {
                 System.out.println("This user already exists.");
                 return false;
             }  
 
+            // insert username, salted/hashed password, and salt into db
             String add = "INSERT INTO creds(user, pass, salt) VALUES(?, ?, ?)";
             statement = connection.prepareStatement(add);
             statement.setString(1, username);
@@ -132,7 +136,7 @@ public class Database implements DatabaseAuthenticate {
             // prepend salt to password
             String salted = salt + password;
 
-            // hash password
+            // hash salted password
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
             byte[] hash = digest.digest(salted.getBytes(StandardCharsets.UTF_8));
             String passEncoded = Base64.getEncoder().encodeToString(hash);
