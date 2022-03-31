@@ -15,6 +15,8 @@ public class AuthTest {
         System.out.println(Database.getInstance().authenticate("notadmin", "notpassword")); 
         // false
         System.out.println(Database.getInstance().authenticate("AND", "WHERE")); 
+        // true
+        System.out.println(Database.getInstance().authenticate("oscar", "notpassword")); 
 
         // LoginServer tests
 

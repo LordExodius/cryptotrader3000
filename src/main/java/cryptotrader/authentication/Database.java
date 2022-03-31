@@ -3,6 +3,7 @@ package cryptotrader.authentication;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.sql.*;
 import java.util.Base64;
 
@@ -49,25 +50,36 @@ public class Database implements DatabaseAuthenticate {
     public boolean authenticate(String username, String password) 
     {
         // Count rows with matching user/hashed password combination
-        String sql = "SELECT COUNT(*) as total FROM creds WHERE user = ? AND pass = ?";
+        String getSalt = "SELECT salt FROM creds WHERE user = ?";
+        String auth = "SELECT COUNT(*) as total FROM creds WHERE user = ? AND pass = ?";
         try 
         {
-            PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, username);
+            // if user exists, get matching salt and prepend to password
+            PreparedStatement saltStatement = connection.prepareStatement(getSalt);
+            saltStatement.setString(1, username);
+            ResultSet result = saltStatement.executeQuery();
+            if(!result.next()) // no entry exists with given username
+                return false;
+            String salt = result.getString("salt");
+            String salted = salt + password;
 
-            // hash password
+            PreparedStatement authStatement = connection.prepareStatement(auth);
+            authStatement.setString(1, username);
+
+            // hash salted password
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
-            byte[] hash = digest.digest(password.getBytes(StandardCharsets.UTF_8));
+            byte[] hash = digest.digest(salted.getBytes(StandardCharsets.UTF_8));
             String passEncoded = Base64.getEncoder().encodeToString(hash);
-            statement.setString(2, passEncoded);
+            authStatement.setString(2, passEncoded);
 
-            ResultSet result = statement.executeQuery();
+            result = authStatement.executeQuery();
             int matches = result.getInt("total");
             result.close();
 
             // if matching row exists, return true
             if(matches > 0)
                 return true;
+                
         }
         catch(NoSuchAlgorithmException e)
         {
@@ -100,18 +112,31 @@ public class Database implements DatabaseAuthenticate {
         {
             PreparedStatement statement = connection.prepareStatement(check);
             statement.setString(1, username);
-            ResultSet result = statement.executeQuery();
-            result.close();
+            if(statement.executeQuery().getInt("total") != 0) // if count of matching user entries is not 0 (user exists)
+            {
+                System.out.println("This user already exists.");
+                return false;
+            }  
 
-            String add = "INSERT INTO creds(user, pass) VALUES(?, ?)";
+            String add = "INSERT INTO creds(user, pass, salt) VALUES(?, ?, ?)";
             statement = connection.prepareStatement(add);
             statement.setString(1, username);
 
+            // generate salt
+            SecureRandom random = new SecureRandom();
+            byte[] sBytes = new byte[32];
+            random.nextBytes(sBytes);
+            String salt = Base64.getEncoder().encodeToString(sBytes);
+            statement.setString(3, salt); // add salt to db
+
+            // prepend salt to password
+            String salted = salt + password;
+
             // hash password
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
-            byte[] hash = digest.digest(password.getBytes(StandardCharsets.UTF_8));
+            byte[] hash = digest.digest(salted.getBytes(StandardCharsets.UTF_8));
             String passEncoded = Base64.getEncoder().encodeToString(hash);
-            statement.setString(2, passEncoded);
+            statement.setString(2, passEncoded); // add salted and hashed password to db
 
             statement.executeUpdate();
             return true;
@@ -123,7 +148,7 @@ public class Database implements DatabaseAuthenticate {
         }
         catch(SQLException e)
         {
-            System.out.println("An SQL error has occured during authentication:");
+            System.out.println("An SQL error has occured during user creation:");
             System.out.println(e);
         }
         return false;
@@ -140,7 +165,7 @@ public class Database implements DatabaseAuthenticate {
         }
         catch(SQLException e)
         {
-            System.out.println("An SQL error has occured during authentication:");
+            System.out.println("An SQL error has occured while clearing the creds table:");
             System.out.println(e);
         }
     }
@@ -153,23 +178,25 @@ public class Database implements DatabaseAuthenticate {
         {
             Statement statement = connection.createStatement();
             ResultSet result = statement.executeQuery(selectAll);
-            while(result.next())
+            while(result.next()) // print username, hashed password, and salt
             {
                 String user = result.getString("user");
                 String pass = result.getString("pass");
-                System.out.println("User: " + user + " | Pass: " + pass);
+                String salt = result.getString("salt");
+                System.out.println("User: " + user + " | Pass: " + pass + " | Salt: " + salt);
             }
+            result.close();
         }
         catch(SQLException e)
         {
-            System.out.println("An SQL error has occured during authentication:");
+            System.out.println("An SQL error has occured during credential display:");
             System.out.println(e);
         }
     }
 
     public static void main(String args[])
     {
-        // Database.getInstance().addUser("admin", "password");
+        Database.getInstance().addUser("oscar", "notpassword");
         // Database.getInstance().clearCreds();
         Database.getInstance().showCreds();
     }
