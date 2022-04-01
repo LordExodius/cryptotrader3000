@@ -15,7 +15,7 @@ public class TradingBroker implements UpdateBroker, ExecuteTrade {
         this.brokerID = brokerID;
         this.numTrades = 0;
         this.coinList = new ArrayList<String>();
-        this.strategy = new S1();
+        this.strategy = new StrategyA();
     }
 
     public String getID() {
