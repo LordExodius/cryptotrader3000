@@ -47,11 +47,6 @@
 			<version>3.15.0</version>
 		</dependency>
 
-    <dependency>
-      <groupId>javax.json</groupId>
-      <artifactId>javax.json-api</artifactId>
-      <version>1.0</version>
-    </dependency>
 
   </dependencies>
 </project>

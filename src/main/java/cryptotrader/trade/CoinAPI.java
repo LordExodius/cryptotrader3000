@@ -8,18 +8,45 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import javax.json.Json;
-
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 
+import java.util.ArrayDeque;
+
 
 public class CoinAPI {
 
-	private JsonObject getDataForCrypto(String id, String date) {
+	ArrayDeque<Long> cache;
+	Long base;
+	public CoinAPI() {
+		cache = new ArrayDeque<Long>(50);
+		base = Long.valueOf((long)(System.currentTimeMillis() / 1000));
+		for (int i = 0; i < 50; i++) {
+			cache.addFirst(base);
+		}
+	}
+
+	/**
+	 * A method that makes sure the CoinGecko API isn't called more than 50 times in a minute
+	 * @throws CoinAPIException
+	 */
+	private void failSafe () throws CoinAPIException {
+		Long currentTime = Long.valueOf((long)(System.currentTimeMillis() / 1000));
+		Long marker = cache.removeFirst();
+
+		if (currentTime - marker < 60 && base != marker) {
+			throw new CoinAPIException("CoinGecko API has been accessed too many times in the last minute. Please wait.");
+		}
+
+		cache.addLast(currentTime);
+	}
+
+	private JsonObject getDataForCrypto(String id, String date) throws CoinAPIException {
+
+		this.failSafe();
 
 		String urlString = String.format(
 				"https://api.coingecko.com/api/v3/coins/%s/history?date=%s", id, date);
@@ -47,7 +74,7 @@ public class CoinAPI {
 		return null;
 	}
 	
-	public double getPriceForCoin(String id, String date) {
+	public double getPriceForCoin(String id, String date) throws CoinAPIException {
 		double price = 0.0;
 		
 		JsonObject jsonObject = getDataForCrypto(id, date);
@@ -60,7 +87,7 @@ public class CoinAPI {
 		return price;
 	}
 	
-	public double getMarketCapForCoin(String id, String date) {
+	public double getMarketCapForCoin(String id, String date) throws CoinAPIException {
 		double marketCap = 0.0;
 		
 		JsonObject jsonObject = getDataForCrypto(id, date);
@@ -73,7 +100,7 @@ public class CoinAPI {
 		return marketCap;
 	}
 	
-	public double getVolumeForCoin(String id, String date) {
+	public double getVolumeForCoin(String id, String date) throws CoinAPIException {
 		double volume = 0.0;
 		
 		JsonObject jsonObject = getDataForCrypto(id, date);
@@ -86,13 +113,15 @@ public class CoinAPI {
 		return volume;
 	}
 
+
+
 	/**
 	 * This method is the driver method for the class, taking in a list of coins a trader is interested in, and outputting a JsonObject with relatd info for it. It gets the current date, then creates a JsonObject of JsonObjects to return.
 	 * 
 	 * @param dataIn
 	 * @return outData
 	 */
-	public JsonObject getData (ArrayList<String> dataIn) {
+	public JsonObject getData (ArrayList<String> dataIn) throws CoinAPIException {
 		JsonObject outData = new JsonObject();
 
 		// Get the current date
@@ -105,13 +134,6 @@ public class CoinAPI {
 			double price = this.getPriceForCoin(coin, date);
 			double marketCap = this.getMarketCapForCoin(coin, date);
 			double volume = this.getVolumeForCoin(coin, date);
-
-			// // API Cooldown
-			// try {
-			// 	Thread.sleep(200);
-			// } catch (Exception e) {
-			// 	continue;
-			// }
 			
 			JsonObject coinInfo = new JsonObject();
 			coinInfo.addProperty("price", price);
@@ -125,7 +147,7 @@ public class CoinAPI {
 
 	}
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws CoinAPIException {
 		CoinAPI fetcher = new CoinAPI();
 		double price = fetcher.getPriceForCoin("bitcoin", "08-09-2021");
 		double marketCap = fetcher.getMarketCapForCoin("bitcoin", "08-09-2021");
