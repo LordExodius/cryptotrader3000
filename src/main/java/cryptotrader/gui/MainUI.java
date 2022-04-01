@@ -28,7 +28,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
-import cryptoTrader.utils.DataVisualizationCreator;
+import cryptotrader.utils.DataVisualizationCreator;
 
 public class MainUI extends JFrame implements ActionListener {
 	/**
