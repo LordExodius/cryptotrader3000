@@ -2,7 +2,7 @@ package cryptotrader.trade;
 
 import cryptotrader.view.TradeResult;
 
-public class S4 extends TradingStrategy {
+public class StrategyD extends TradingStrategy {
 
     @Override
     public TradeResult trade() {
