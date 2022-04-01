@@ -5,13 +5,13 @@ public class StrategyCreator implements Create {
     @Override
     public TradingStrategy create(String strategySelection) {
         if (strategySelection.equals("Strategy A"))
-            return new S1();
+            return new StrategyA();
         else if (strategySelection.equals("Strategy B"))
-            return new S2();
+            return new StrategyB();
         else if (strategySelection.equals("Strategy C"))
-            return new S2();
+            return new StrategyC();
         else if (strategySelection.equals("Strategy D"))
-            return new S3();
+            return new StrategyD();
         else 
             return null;
     }
