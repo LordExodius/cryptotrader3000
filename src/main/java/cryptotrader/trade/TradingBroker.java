@@ -2,6 +2,8 @@ package cryptotrader.trade;
 
 import java.util.ArrayList;
 
+import com.google.gson.JsonObject;
+
 import cryptotrader.view.TradeResult;
 
 public class TradingBroker implements UpdateBroker, ExecuteTrade {
