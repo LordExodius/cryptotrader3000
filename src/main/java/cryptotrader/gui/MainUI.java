@@ -1,4 +1,4 @@
-package cryptoTrader.gui;
+package cryptotrader.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -214,6 +214,10 @@ public class MainUI extends JFrame implements ActionListener {
 			if (selectedRow != -1)
 				dtm.removeRow(selectedRow);
 		}
+	}
+
+	private void performTrades() {
+
 	}
 
 }

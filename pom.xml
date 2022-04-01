@@ -55,7 +55,7 @@
 			<configuration>
 			<archive>
 				<manifest>
-					<mainClass>cryptoTrader.gui.MainUI</mainClass>
+					<mainClass>cryptotrader.gui.MainUI</mainClass>
 				</manifest>
 			</archive>
 			<descriptorRefs>
