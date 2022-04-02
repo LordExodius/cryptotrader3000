@@ -2,10 +2,15 @@ package cryptotrader.user;
 
 import com.google.gson.JsonObject;
 import java.util.HashMap;
+import java.util.ArrayList;
 
 import cryptotrader.trade.TraderList;
 import cryptotrader.trade.CoinAPI;
+import cryptotrader.trade.Coin;
+import cryptotrader.trade.CoinAPIException;
+import cryptotrader.trade.TradingBroker;
 import cryptotrader.view.TradeLog;
+import cryptotrader.view.TradeResult;
 
 public class User {
     // The singleton instance of this class
@@ -37,9 +42,28 @@ public class User {
      * Fetch relevant coin info from the CoinAPI and perform trades for all
      * interested trading brokers in this user's trader list.
      * 
-     * TODO
      */
     public void performTrades() {
+        ArrayList<String> coinNames = new ArrayList<String>(traderList.getInterestedCoins());
+        HashMap<String, Coin> coinInfo;
+        ArrayList<TradeResult> tradeResults;
+        try {
+            coinInfo = coinAPI.getData(coinNames);
+            // pass each trader the coins that they are interested in
+            for (TradingBroker trader : traderList.getList()) {
+                // filter out the coins that this trader is interested in
+                HashMap<String, Coin> interestedCoins = new HashMap<String, Coin>();
+                for (String interestedCoinName : trader.getCoinList()) {
+                    interestedCoins.put(interestedCoinName, coinInfo.get(interestedCoinName));
+                }
+                // execute the trade for this trader
+                TradeResult result = trader.executeTrade(interestedCoins);
+                tradeResults.add(result);
+            }
+        } catch (CoinAPIException e) {
+            // TODO: How should we handle an error to the API call (e.g. because of timeout)
+            return;
+        }
         return;
     }
 
