@@ -5,8 +5,11 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Base64;
 
+import cryptotrader.trade.StrategyCreator;
 import cryptotrader.trade.TraderList;
 import cryptotrader.trade.TradingBroker;
 import cryptotrader.user.User;
@@ -134,7 +137,7 @@ public class Database implements DatabaseAuthenticate, GetFromDatabase, AddToDat
 
     @Override
     public void addTradeLog(TradeLog log) {
-        String add = "INSERT INTO results(user, brokerID, strategy, coinName, action, quantity int, price real, date text) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+        String add = "INSERT INTO results(user, brokerID, strategy, coinName, action, quantity, price, date) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
         for(TradeResult result : log.getResults())
         {
             try
@@ -159,14 +162,37 @@ public class Database implements DatabaseAuthenticate, GetFromDatabase, AddToDat
     }
 
     @Override
-    public TraderList getTraders(String username) {
-        // TODO Auto-generated method stub
+    public TraderList getTraders() {
+        TraderList list = new TraderList();
+        String get = "SELECT * from brokers WHERE user = " + User.getInstance().getUsername();
+        try
+        {
+            Statement statement = connection.createStatement();
+            ResultSet results = statement.executeQuery(get);
+            TradingBroker tempBroker;
+            StrategyCreator creator = new StrategyCreator();
+            while(results.next())
+            {
+                tempBroker = new TradingBroker(results.getInt("brokerID"));
+                tempBroker.updateStrategy(creator.create(results.getString("strategy")));
+                tempBroker.updateName(results.getString("name"));
+                tempBroker.setNumTrades(results.getInt("numTrades"));
+                tempBroker.updateCoins(new ArrayList<String>(Arrays.asList(results.getString("coinList").split(",", 0))));
+                list.addTrader(tempBroker);
+            }
+            return list;
+        }
+        catch(SQLException e)
+        {
+            System.out.println("An SQL error has occured while storing retrieving broker data:");
+            System.out.println(e);
+        }
         return null;
     }
 
     @Override
-    public TradeLog getTradeLog(String username) {
-        // TODO Auto-generated method stub
+    public TradeLog getTradeLog() {
+        TradeLog log = new TradeLog();
         return null;
     }
 

@@ -22,7 +22,7 @@ public class StrategyA extends TradingStrategy {
     @Override
     public String getName()
     {
-        return "StrategyA";
+        return "Strategy A";
     }
 
     public StrategyA () {

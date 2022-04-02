@@ -8,15 +8,25 @@ import cryptotrader.view.TradeResult;
 
 public class TradingBroker implements UpdateBroker, ExecuteTrade {
     private static int nextID = 1;
-    public int brokerID;
-    public String name;
-    public int numTrades;
-    public ArrayList<String> coinList;
-    public TradingStrategy strategy;
+    private int brokerID;
+    private String name;
+    private int numTrades;
+    private ArrayList<String> coinList;
+    private TradingStrategy strategy;
 
-    public TradingBroker(String brokerID) {
+    public TradingBroker() {
         this.brokerID = nextID;
-        this.nextID++;
+        nextID++;
+        this.numTrades = 0;
+        this.coinList = new ArrayList<String>();
+        this.strategy = new StrategyA();
+    }
+    
+    public TradingBroker(int brokerID)
+    {
+        this.brokerID = brokerID;
+        if(brokerID > nextID)
+            nextID = brokerID + 1;
         this.numTrades = 0;
         this.coinList = new ArrayList<String>();
         this.strategy = new StrategyA();
@@ -53,14 +63,19 @@ public class TradingBroker implements UpdateBroker, ExecuteTrade {
         this.name = name;
     }
     @Override
-    public void addCoin(String newCoinName) {
+    public void updateCoins(ArrayList<String> newCoins) {
         // TODO Auto-generated method stub
-        coinList.add(newCoinName);
+        this.coinList = newCoins;
     }
     @Override
     public void updateStrategy(TradingStrategy strategy) {
         // TODO Auto-generated method stub
        this.strategy = strategy;
+    }
+
+    public void setNumTrades(int numTrades)
+    {
+        this.numTrades = numTrades;
     }
 
     public boolean equals(TradingBroker other) {

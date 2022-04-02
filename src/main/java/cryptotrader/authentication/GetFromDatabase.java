@@ -4,6 +4,6 @@ import cryptotrader.trade.TraderList;
 import cryptotrader.view.TradeLog;
 
 public interface GetFromDatabase {
-    public TraderList getTraders(String username);
-    public TradeLog getTradeLog(String username);
+    public TraderList getTraders();
+    public TradeLog getTradeLog();
 }
