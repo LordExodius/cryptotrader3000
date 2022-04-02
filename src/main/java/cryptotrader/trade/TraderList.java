@@ -1,7 +1,6 @@
 package cryptotrader.trade;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.HashSet;
 
 public class TraderList implements UpdateTraderList {
@@ -10,21 +9,40 @@ public class TraderList implements UpdateTraderList {
     // all coins that at least one trader is interested in
     private HashSet<String> interestedCoins;
 
+    /**
+     * Constructor
+     */
     public TraderList() {
         traderList = new ArrayList<TradingBroker>();
         interestedCoins = new HashSet<String>();
     }
 
     @Override
+    /**
+     * Method that checks if a trader to be added is already in the trade list, then adds it in
+     * @param newTrader
+     */
     public boolean addTrader(TradingBroker newTrader) {
-        // TODO Auto-generated method stub
-        traderList.add(newTrader);
-        return true;
+        if (!(traderList.contains(newTrader))) {
+            traderList.add(newTrader);
+
+            for (String coin : newTrader.getCoinList()) {
+                if (!interestedCoins.contains(coin)) {
+                    interestedCoins.add(coin);
+                }
+            }
+            return true;
+        }
+        return false;
     }
 
     @Override
+    /**
+     * A method that removes and returns a specified trader
+     * @param brokerID
+     * @return removedTrader
+     */
     public TradingBroker removeTrader(int brokerID) {
-        // TODO Auto-generated method stub
         TradingBroker removedTrader = null;
         for (TradingBroker trader : traderList) {
             if (trader.getID() == brokerID)
@@ -39,23 +57,60 @@ public class TraderList implements UpdateTraderList {
     }
 
     @Override
+    /**
+     * Method that updates a trader in trader list's name
+     * @param brokerID
+     * @param brokerName
+     * @return boolean
+     */
     public boolean updateName(int brokerID, String brokerName) {
-        // TODO Auto-generated method stub
+        for (TradingBroker trader : traderList) {
+            if (trader.getID() == brokerID) {
+                trader.updateName(brokerName);
+                return true;
+            }
+        }
         return false;
     }
 
     @Override
+    /**
+     * Method that adds a coin to a broker in the trader list
+     * @param brokerID
+     * @param newCoin
+     * @return boolean
+     */
     public boolean addCoin(int brokerID, String newCoin) {
-        // TODO Auto-generated method stub
+        for (TradingBroker trader : traderList) {
+            if (trader.getID() == brokerID) {
+                trader.addCoin(newCoin);
+                return true;
+            }
+        }
         return false;
     }
 
     @Override
+    /**
+     * Method that updates a trader's strategy
+     * @param brokerID
+     * @param strategy
+     * @return boolean
+     */
     public boolean updateStrategy(int brokerID, TradingStrategy strategy) {
-        // TODO Auto-generated method stub
+        for (TradingBroker trader : traderList) {
+            if (trader.getID() == brokerID) {
+                trader.updateStrategy(strategy);;
+                return true;
+            }
+        }
         return false;
     }
 
+    /**
+     * Method that returns the trader list
+     * @return traderList
+     */
     public ArrayList<TradingBroker> getList()
     {
         return traderList;
@@ -63,7 +118,7 @@ public class TraderList implements UpdateTraderList {
 
     /**
      * Get the coin names where each coin is of interest to at least one trader.
-     * @return
+     * @return interestedCoins
      */
     public HashSet<String> getInterestedCoins() {
         return interestedCoins;

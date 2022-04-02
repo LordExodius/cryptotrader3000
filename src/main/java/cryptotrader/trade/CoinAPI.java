@@ -3,12 +3,9 @@ package cryptotrader.trade;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import java.util.Date;
@@ -117,7 +114,7 @@ public class CoinAPI {
 
 
 	/**
-	 * This method is the driver method for the class, taking in a list of coins a trader is interested in, and outputting a JsonObject with relatd info for it. It gets the current date, then creates a JsonObject of JsonObjects to return.
+	 * Takes in the 3 letter name identifier of a coin and creates coin objects from the API call, then returns the map of coins
 	 * 
 	 * @param dataIn
 	 * @return outData
@@ -136,7 +133,7 @@ public class CoinAPI {
 			double marketCap = this.getMarketCapForCoin(coin, date);
 			double volume = this.getVolumeForCoin(coin, date);
 
-			Coin newCoin = new Coin(price, marketCap, volume);
+			Coin newCoin = new Coin(coin, price, marketCap, volume);
 			coinInfo.put(coin, newCoin);
 		}
 
