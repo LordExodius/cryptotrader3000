@@ -10,6 +10,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import java.util.Date;
 import java.text.SimpleDateFormat;
+import java.util.concurrent.TimeUnit;
 
 import java.util.ArrayDeque;
 import java.util.HashMap;
@@ -18,10 +19,11 @@ import java.util.HashMap;
 public class CoinAPI {
 
 	ArrayDeque<Long> cache;
-	Long base;
+	long base;
 	public CoinAPI() {
 		cache = new ArrayDeque<Long>(50);
-		base = Long.valueOf((long)(System.currentTimeMillis() / 1000));
+		long timeMillis = System.currentTimeMillis();
+		base = TimeUnit.MILLISECONDS.toSeconds(timeMillis);
 		for (int i = 0; i < 50; i++) {
 			cache.addFirst(base);
 		}
@@ -32,8 +34,9 @@ public class CoinAPI {
 	 * @throws CoinAPIException
 	 */
 	private void failSafe () throws CoinAPIException {
-		Long currentTime = Long.valueOf((long)(System.currentTimeMillis() / 1000));
-		Long marker = cache.removeFirst();
+		long millis = System.currentTimeMillis();
+		long currentTime = TimeUnit.MILLISECONDS.toSeconds(millis);
+		long marker = cache.removeFirst();
 
 		if (currentTime - marker < 60 && base != marker) {
 			throw new CoinAPIException("CoinGecko API has been accessed too many times in the last minute. Please wait.");
@@ -142,20 +145,45 @@ public class CoinAPI {
 	}
 	
 	public static void main(String[] args) throws CoinAPIException {
-		CoinAPI fetcher = new CoinAPI();
-		double price = fetcher.getPriceForCoin("bitcoin", "08-09-2021");
-		double marketCap = fetcher.getMarketCapForCoin("bitcoin", "08-09-2021");
-		double volume = fetcher.getVolumeForCoin("bitcoin", "08-09-2021");
+
+		CoinAPI test = new CoinAPI();
+		// Test 1
+		ArrayList<String> testIn = new ArrayList<String>() {{
+			add("bitcoin");
+			add("ethereum");
+			add("litecoin");
+			add("solana");
+			add("cardano");
+		}};
+		// HashMap<String, Coin> test1 = test.getData(testIn);
+		// for (Coin coin : test1.values()) {
+		// 	System.out.println(coin.getName() + ", price: " + coin.getPrice() + ", volume: " + coin.getVolume() + ", market cap: " + coin.getmarketCap());
+		// }
+
+		// Test 2
+		for (int i = 0; i < 60; i++) {
+			try {
+				test.getData(testIn);
+				System.out.println("Call " + i + " passed");
+			} catch (CoinAPIException e) {
+				System.out.println("Call " +  " blocked");
+			}
+		}
+
+		// CoinAPI fetcher = new CoinAPI();
+		// double price = fetcher.getPriceForCoin("bitcoin", "08-09-2021");
+		// double marketCap = fetcher.getMarketCapForCoin("bitcoin", "08-09-2021");
+		// double volume = fetcher.getVolumeForCoin("bitcoin", "08-09-2021");
 		
-		System.out.println("Bitcoin=>\tPrice: " + price + 
-								"\n\t\tMarket Cap: " + marketCap + 
-								"\n\t\tVolume: "+volume);
+		// System.out.println("Bitcoin=>\tPrice: " + price + 
+		// 						"\n\t\tMarket Cap: " + marketCap + 
+		// 						"\n\t\tVolume: "+volume);
 
-		ArrayList<String> test = new ArrayList<String>();
-		test.add("bitcoin");
-		test.add("ethereum");
+		// ArrayList<String> test = new ArrayList<String>();
+		// test.add("bitcoin");
+		// test.add("ethereum");
 
-		System.out.println(fetcher.getData(test));
+		// System.out.println(fetcher.getData(test));
 		
 	}
 }

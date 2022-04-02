@@ -3,6 +3,8 @@ package cryptotrader.trade;
 import cryptotrader.view.TradeResult;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Date;
+import java.text.SimpleDateFormat;
 
 public class StrategyA extends TradingStrategy {
     
@@ -40,8 +42,12 @@ public class StrategyA extends TradingStrategy {
 
         ArrayList<String> interestedCoins = new ArrayList<>(coinsIn.keySet());
 
+        // Get current date
+        Date date = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat();
+
         if (checkCoins(interestedCoins) && coinsIn.get("BTC").getPrice() <= 50000 && adaPrice > 2) {
-            TradeResult res = new TradeResult(null, this, "ADA", "buy", 10, adaPrice, "1970-01-01 00:00");
+            TradeResult res = new TradeResult(null, this, "ADA", "buy", 10, adaPrice, formatter.format(date));
             return res;
         }
         
