@@ -47,7 +47,7 @@ public class TradeActivityGraph extends Observer {
         HashMap<TradingBroker,Integer> brokerActionsMap = new HashMap<TradingBroker,Integer>();
 
         for (TradeResult entry : entries) {
-            if (brokerActionsMap.containsKey(entry)) {
+            if (brokerActionsMap.containsKey(entry.getBroker())) {
                 int actions = brokerActionsMap.get(entry.getBroker());
                 brokerActionsMap.replace(entry.getBroker(), actions + 1);
             } else {
