@@ -9,6 +9,7 @@ import java.util.Base64;
 
 import cryptotrader.trade.TraderList;
 import cryptotrader.trade.TradingBroker;
+import cryptotrader.user.User;
 import cryptotrader.view.TradeLog;
 import cryptotrader.view.TradeResult;
 
@@ -108,14 +109,14 @@ public class Database implements DatabaseAuthenticate, GetFromDatabase, AddToDat
     }
 
     @Override
-    public void addTraders(TraderList traders, String user) {
+    public void addTraders(TraderList traders) {
         String add = "INSERT INTO brokers(user, brokerID, name, numTrades, coinList, strategy) VALUES(?, ?, ?, ?, ?, ?)";
         for(TradingBroker trader : traders.getList())
         {
             try
             {
                 PreparedStatement statement = connection.prepareStatement(add);
-                statement.setString(1, user);
+                statement.setString(1, User.getInstance().getUsername());
                 statement.setInt(2, trader.getID());
                 statement.setString(3, trader.getName());
                 statement.setInt(4, trader.getNumTrades());
@@ -132,21 +133,21 @@ public class Database implements DatabaseAuthenticate, GetFromDatabase, AddToDat
     }
 
     @Override
-    public void addTradeLog(TradeLog log, String user) {
+    public void addTradeLog(TradeLog log) {
         String add = "INSERT INTO results(user, brokerID, strategy, coinName, action, quantity int, price real, date text) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
         for(TradeResult result : log.getResults())
         {
             try
             {
                 PreparedStatement statement = connection.prepareStatement(add);
-                statement.setString(1, user);
+                statement.setString(1, User.getInstance().getUsername());
                 statement.setInt(2, result.getBroker().getID());
                 statement.setString(3, result.getStrategy().getName());
                 statement.setString(4, result.getCoinName());
                 statement.setString(5, result.getActionType());
                 statement.setInt(6, result.getQuantity());
                 statement.setDouble(7, result.getPrice());
-                statement.setString(8, "TIME"); // TODO REPLACE WTIH REAL TIME
+                statement.setString(8, result.getTimestamp());
                 statement.executeUpdate();
             }
             catch(SQLException e)
