@@ -78,5 +78,10 @@ public class TradeResult implements GetTradeInfo {
         return timestamp;
     }
 
+    public Object[] getResultObj() {
+        Object[] obj = {broker.getName(), broker.getStrategy().getName(), coinName, action, quantity, price, timestamp};
+        return obj;
+    }
+
     
 }
