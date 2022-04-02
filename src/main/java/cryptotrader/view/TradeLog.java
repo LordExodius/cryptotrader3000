@@ -11,8 +11,7 @@ public class TradeLog extends Subject implements UpdateTradeLog {
         entries.addAll(tradeResults);
     }
 
-    public ArrayList<TradeResult> getResults()
-    {
+    public ArrayList<TradeResult> getResults() {
         return entries;
     }
     
