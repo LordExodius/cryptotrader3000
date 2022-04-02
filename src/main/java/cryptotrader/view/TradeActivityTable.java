@@ -42,7 +42,27 @@ public class TradeActivityTable extends Observer {
 
         Object[] columnNames = {"Trader","Strategy","CryptoCoin","Action","Quantity","Price","Date"};
 
-        
+        Object[][] data = new Object[entries.size()][7];
+
+        for (int i = 0; i < entries.size(); i++) {
+            data[i] = entries.get(i).getResultObj();
+        }
+
+        JTable table = new JTable(data, columnNames);
+		//table.setPreferredSize(new Dimension(600, 300));
+		
+		JScrollPane scrollPane = new JScrollPane(table);
+		scrollPane.setBorder (BorderFactory.createTitledBorder (BorderFactory.createEtchedBorder (),
+                "Trader Actions",
+                TitledBorder.CENTER,
+                TitledBorder.TOP));
+		
+	
+		
+		scrollPane.setPreferredSize(new Dimension(800, 300));
+		table.setFillsViewportHeight(true);;
+		
+		MainUI.getInstance().updateStats(scrollPane);
 
     }
 
