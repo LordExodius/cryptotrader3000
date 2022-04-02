@@ -46,7 +46,7 @@ public class User {
     public void performTrades() {
         ArrayList<String> coinNames = new ArrayList<String>(traderList.getInterestedCoins());
         HashMap<String, Coin> coinInfo;
-        ArrayList<TradeResult> tradeResults;
+        ArrayList<TradeResult> tradeResults = new ArrayList<TradeResult>();
         try {
             coinInfo = coinAPI.getData(coinNames);
             // pass each trader the coins that they are interested in
