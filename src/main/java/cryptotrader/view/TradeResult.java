@@ -3,6 +3,9 @@ package cryptotrader.view;
 import cryptotrader.trade.TradingBroker;
 import cryptotrader.trade.TradingStrategy;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 public class TradeResult implements GetTradeInfo {
 
     private TradingBroker broker;
@@ -20,8 +23,7 @@ public class TradeResult implements GetTradeInfo {
         String coinName,
         String action,
         int quantity,
-        double price,
-        String timestamp
+        double price
     ) {
         this.broker = broker;
         this.strategy = strategy;
@@ -29,7 +31,10 @@ public class TradeResult implements GetTradeInfo {
         this.action = action;
         this.quantity = quantity;
         this.price = price;
-        this.timestamp = timestamp;
+        
+        LocalDate date = LocalDate.now();
+        DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MMM-yyyy");
+        this.timestamp = date.format(myFormatObj);
     }
     
     @Override

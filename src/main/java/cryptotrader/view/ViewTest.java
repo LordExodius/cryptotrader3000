@@ -11,12 +11,8 @@ public class ViewTest {
         TradingBroker broker3 = new TradingBroker();
         TradingBroker broker4 = new TradingBroker();
 
-        StrategyB strategyB = new StrategyB();
-        StrategyC strategyC = new StrategyC();
-        StrategyD strategyD = new StrategyD();
-
         // TEST 1: Adding trade results to TradeLog
-
+        TradeResult result1 = new TradeResult(broker1, )
         
 
         

@@ -9,6 +9,8 @@ public class TradeActivityGraph implements Observer {
     }
 
     private void createBarOutput() {
+
+		
         
     }
     
