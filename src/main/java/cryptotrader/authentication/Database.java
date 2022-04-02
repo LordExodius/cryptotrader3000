@@ -7,7 +7,10 @@ import java.security.SecureRandom;
 import java.sql.*;
 import java.util.Base64;
 
-public class Database implements DatabaseAuthenticate {
+import cryptotrader.trade.TraderList;
+import cryptotrader.view.TradeLog;
+
+public class Database implements DatabaseAuthenticate, GetFromDatabase, AddToDatabase {
     // NOTE: Implement GetFromDatabase when TraderList and TradeLog are aded
 
     /**
@@ -100,6 +103,30 @@ public class Database implements DatabaseAuthenticate {
         if(instance == null)
             instance = new Database();
         return instance;
+    }
+
+    @Override
+    public void addTraders(TraderList[] traders) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void addTradeLog(TradeLog log) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public TraderList getTraders(String username) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public TradeLog getTradeLog(String username) {
+        // TODO Auto-generated method stub
+        return null;
     }
 
     // ----------------------------------------------------------------------------------

@@ -18,11 +18,11 @@ public class TraderList implements UpdateTraderList {
     }
 
     @Override
-    public TradingBroker removeTrader(String brokerID) {
+    public TradingBroker removeTrader(int brokerID) {
         // TODO Auto-generated method stub
         TradingBroker removedTrader = null;
         for (TradingBroker trader : traderList) {
-            if (trader.getID().equals(brokerID))
+            if (trader.getID() == brokerID)
                 removedTrader = trader;
         }
         
@@ -34,19 +34,19 @@ public class TraderList implements UpdateTraderList {
     }
 
     @Override
-    public boolean updateName(String brokerID, String brokerName) {
+    public boolean updateName(int brokerID, String brokerName) {
         // TODO Auto-generated method stub
         return false;
     }
 
     @Override
-    public boolean addCoin(String brokerID, String newCoin) {
+    public boolean addCoin(int brokerID, String newCoin) {
         // TODO Auto-generated method stub
         return false;
     }
 
     @Override
-    public boolean updateStrategy(String brokerID, TradingStrategy strategy) {
+    public boolean updateStrategy(int brokerID, TradingStrategy strategy) {
         // TODO Auto-generated method stub
         return false;
     }
