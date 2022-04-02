@@ -11,6 +11,12 @@ public class StrategyA extends TradingStrategy {
      */
     
     @Override
+    public String getName()
+    {
+        return "StrategyA";
+    }
+
+    @Override
     public TradeResult trade(JsonObject coinInfo) {
         JsonElement BTCprice = coinInfo.get("bitcoin");
         System.out.println(BTCprice);

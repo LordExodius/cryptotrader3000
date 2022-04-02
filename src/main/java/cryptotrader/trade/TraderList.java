@@ -50,5 +50,10 @@ public class TraderList implements UpdateTraderList {
         // TODO Auto-generated method stub
         return false;
     }
+
+    public ArrayList<TradingBroker> getList()
+    {
+        return traderList;
+    }
     
 }

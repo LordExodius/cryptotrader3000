@@ -8,7 +8,9 @@ import java.sql.*;
 import java.util.Base64;
 
 import cryptotrader.trade.TraderList;
+import cryptotrader.trade.TradingBroker;
 import cryptotrader.view.TradeLog;
+import cryptotrader.view.TradeResult;
 
 public class Database implements DatabaseAuthenticate, GetFromDatabase, AddToDatabase {
     // NOTE: Implement GetFromDatabase when TraderList and TradeLog are aded
@@ -16,8 +18,8 @@ public class Database implements DatabaseAuthenticate, GetFromDatabase, AddToDat
     /**
      * Databse contains 3 tables:
      * - creds(user text, pass text)
-     * - traders(user text, )
-     * - tradelogs()
+     * - brokers(user text, brokerID int, name text, numTrades int, coinList text, strategy text)
+     * - results(user text, brokerID int, strategy text, coinName text, action text, quantity int, price real, date text)
      */
 
     private static Database instance = new Database();
@@ -106,15 +108,53 @@ public class Database implements DatabaseAuthenticate, GetFromDatabase, AddToDat
     }
 
     @Override
-    public void addTraders(TraderList[] traders) {
-        // TODO Auto-generated method stub
-        
+    public void addTraders(TraderList traders, String user) {
+        String add = "INSERT INTO brokers(user, brokerID, name, numTrades, coinList, strategy) VALUES(?, ?, ?, ?, ?, ?)";
+        for(TradingBroker trader : traders.getList())
+        {
+            try
+            {
+                PreparedStatement statement = connection.prepareStatement(add);
+                statement.setString(1, user);
+                statement.setInt(2, trader.getID());
+                statement.setString(3, trader.getName());
+                statement.setInt(4, trader.getNumTrades());
+                statement.setString(5, String.join(",", trader.getCoinList()));
+                statement.setString(6, trader.getStrategy().getName());
+                statement.executeUpdate();
+            }
+            catch(SQLException e)
+            {
+                System.out.println("An SQL error has occured while storing trader data:");
+                System.out.println(e);
+            }
+        }
     }
 
     @Override
-    public void addTradeLog(TradeLog log) {
-        // TODO Auto-generated method stub
-        
+    public void addTradeLog(TradeLog log, String user) {
+        String add = "INSERT INTO results(user, brokerID, strategy, coinName, action, quantity int, price real, date text) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+        for(TradeResult result : log.getResults())
+        {
+            try
+            {
+                PreparedStatement statement = connection.prepareStatement(add);
+                statement.setString(1, user);
+                statement.setInt(2, result.getBroker().getID());
+                statement.setString(3, result.getStrategy().getName());
+                statement.setString(4, result.getCoinName());
+                statement.setString(5, result.getActionType());
+                statement.setInt(6, result.getQuantity());
+                statement.setDouble(7, result.getPrice());
+                statement.setString(8, "TIME"); // TODO REPLACE WTIH REAL TIME
+                statement.executeUpdate();
+            }
+            catch(SQLException e)
+            {
+                System.out.println("An SQL error has occured while storing trade result data:");
+                System.out.println(e);
+            }
+        }
     }
 
     @Override

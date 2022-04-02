@@ -6,6 +6,12 @@ import com.google.gson.JsonObject;
 public class StrategyB extends TradingStrategy {
 
     @Override
+    public String getName()
+    {
+        return "StrategyB";
+    }
+
+    @Override
     public TradeResult trade(JsonObject coinInfo) {
         // TODO Auto-generated 
         return null;

@@ -4,6 +4,6 @@ import cryptotrader.trade.TraderList;
 import cryptotrader.view.TradeLog;
 
 public interface AddToDatabase {
-    public void addTraders(TraderList[] traders);
-    public void addTradeLog(TradeLog log);
+    public void addTraders(TraderList traders, String username);
+    public void addTradeLog(TradeLog log, String username);
 }

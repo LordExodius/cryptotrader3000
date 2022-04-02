@@ -18,5 +18,10 @@ public abstract class TradingStrategy implements Trade {
     public ArrayList<String> getCoins() {
         return this.coins;
     }
+
+    public String getName()
+    {
+        return null;
+    }
     
 }
