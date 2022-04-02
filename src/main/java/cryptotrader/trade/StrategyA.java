@@ -1,13 +1,22 @@
 package cryptotrader.trade;
 
 import cryptotrader.view.TradeResult;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonElement;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class StrategyA extends TradingStrategy {
+    
+    /**
+     * If the price of BTC is less or equal 50,000$ and the price of ADA more than 2$ then buy 10 ADA coins
+     */
+
+    private static final ArrayList<String> coinsA = new ArrayList<String>(){{
+        add("BTC");
+        add("ADA");
+    }};
 
     /**
-     * "If the price of BTC is less or equal $47,000 and the price of ADA is more than $1.15 then buy 10 ADA coins"
+     * Constructor
      */
     
     @Override
@@ -16,15 +25,27 @@ public class StrategyA extends TradingStrategy {
         return "StrategyA";
     }
 
-    @Override
-    public TradeResult trade(JsonObject coinInfo) {
-        JsonElement BTCprice = coinInfo.get("bitcoin");
-        System.out.println(BTCprice);
-        return null;
+    public StrategyA () {
+        super(coinsA);
     }
 
-    public static void main(String[] args) {
-        StrategyA test = new StrategyA();
+    /**
+     * A method that performs trading logic for Strategy A
+     * 
+     * @param coinsIn
+     * @return res
+     */
+    public TradeResult trade (HashMap<String, Coin> coinsIn) {
+        double adaPrice = coinsIn.get("ADA").getPrice();
+
+        ArrayList<String> interestedCoins = new ArrayList<>(coinsIn.keySet());
+
+        if (checkCoins(interestedCoins) && coinsIn.get("BTC").getPrice() <= 50000 && adaPrice > 2) {
+            TradeResult res = new TradeResult(null, this, "ADA", "buy", 10, adaPrice, "1970-01-01 00:00");
+            return res;
+        }
+        
+        return null;
     }
 
 }

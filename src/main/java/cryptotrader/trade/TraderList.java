@@ -1,13 +1,18 @@
 package cryptotrader.trade;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.HashSet;
 
 public class TraderList implements UpdateTraderList {
 
     private ArrayList<TradingBroker> traderList;
+    // all coins that at least one trader is interested in
+    private HashSet<String> interestedCoins;
 
-    public TraderList () {
+    public TraderList() {
         traderList = new ArrayList<TradingBroker>();
+        interestedCoins = new HashSet<String>();
     }
 
     @Override
@@ -54,6 +59,14 @@ public class TraderList implements UpdateTraderList {
     public ArrayList<TradingBroker> getList()
     {
         return traderList;
+    }
+
+    /**
+     * Get the coin names where each coin is of interest to at least one trader.
+     * @return
+     */
+    public HashSet<String> getInterestedCoins() {
+        return interestedCoins;
     }
     
 }

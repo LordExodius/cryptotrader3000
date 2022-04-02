@@ -10,4 +10,5 @@ public interface GetTradeInfo {
     public String getActionType();
     public int getQuantity();
     public double getPrice();
+    public String getTimestamp();
 }

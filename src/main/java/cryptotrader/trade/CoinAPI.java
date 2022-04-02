@@ -15,6 +15,7 @@ import java.util.Date;
 import java.text.SimpleDateFormat;
 
 import java.util.ArrayDeque;
+import java.util.HashMap;
 
 
 public class CoinAPI {
@@ -121,8 +122,8 @@ public class CoinAPI {
 	 * @param dataIn
 	 * @return outData
 	 */
-	public JsonObject getData (ArrayList<String> dataIn) throws CoinAPIException {
-		JsonObject outData = new JsonObject();
+	public HashMap<String, Coin> getData (ArrayList<String> dataIn) throws CoinAPIException {
+		HashMap<String, Coin> coinInfo = new HashMap<String, Coin>();
 
 		// Get the current date
 		Date rawDate = new Date();
@@ -134,16 +135,12 @@ public class CoinAPI {
 			double price = this.getPriceForCoin(coin, date);
 			double marketCap = this.getMarketCapForCoin(coin, date);
 			double volume = this.getVolumeForCoin(coin, date);
-			
-			JsonObject coinInfo = new JsonObject();
-			coinInfo.addProperty("price", price);
-			coinInfo.addProperty("marketCap", marketCap);
-			coinInfo.addProperty("volume", volume);
 
-			outData.add(coin, coinInfo);
+			Coin newCoin = new Coin(price, marketCap, volume);
+			coinInfo.put(coin, newCoin);
 		}
 
-		return outData;
+		return coinInfo;
 
 	}
 	

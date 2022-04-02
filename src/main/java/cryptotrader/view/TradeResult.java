@@ -11,14 +11,25 @@ public class TradeResult implements GetTradeInfo {
     private String action;
     private int quantity;
     private double price;
+    // time in which the trade was executed
+    private String timestamp;
 
-    public TradeResult(TradingBroker broker, TradingStrategy strategy, String coinName, String action, int quantity, double price) {
+    public TradeResult(
+        TradingBroker broker,
+        TradingStrategy strategy,
+        String coinName,
+        String action,
+        int quantity,
+        double price,
+        String timestamp
+    ) {
         this.broker = broker;
         this.strategy = strategy;
         this.coinName = coinName;
         this.action = action;
         this.quantity = quantity;
         this.price = price;
+        this.timestamp = timestamp;
     }
     
     @Override
@@ -55,6 +66,11 @@ public class TradeResult implements GetTradeInfo {
     public double getPrice() {
         // TODO Auto-generated method stub
         return this.price;
+    }
+
+    @Override
+    public String getTimestamp() {
+        return timestamp;
     }
 
     
