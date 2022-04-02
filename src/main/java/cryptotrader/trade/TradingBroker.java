@@ -45,7 +45,7 @@ public class TradingBroker implements UpdateBroker, ExecuteTrade {
     @Override
     public TradeResult executeTrade() {
         // TODO Auto-generated method stub
-        return strategy.trade();
+        return null;
     }
     @Override
     public void updateName(String name) {

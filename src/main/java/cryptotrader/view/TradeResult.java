@@ -69,7 +69,7 @@ public class TradeResult implements GetTradeInfo {
     }
 
     @Override
-    public string getTimestamp() {
+    public String getTimestamp() {
         return timestamp;
     }
 
