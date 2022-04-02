@@ -2,23 +2,27 @@ package cryptotrader.trade;
 
 import java.util.ArrayList;
 
+import com.google.gson.JsonObject;
+
 import cryptotrader.view.TradeResult;
 
 public class TradingBroker implements UpdateBroker, ExecuteTrade {
-    public String brokerID;
+    private static int nextID = 1;
+    public int brokerID;
     public String name;
     public int numTrades;
     public ArrayList<String> coinList;
     public TradingStrategy strategy;
 
     public TradingBroker(String brokerID) {
-        this.brokerID = brokerID;
+        this.brokerID = nextID;
+        this.nextID++;
         this.numTrades = 0;
         this.coinList = new ArrayList<String>();
         this.strategy = new StrategyA();
     }
 
-    public String getID() {
+    public int getID() {
         return brokerID;
     }
 
