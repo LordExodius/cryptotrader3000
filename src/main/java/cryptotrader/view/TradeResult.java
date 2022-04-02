@@ -9,6 +9,8 @@ public class TradeResult implements GetTradeInfo {
     private String action;
     private int quantity;
     private double price;
+    // time in which the trade was executed
+    private String timestamp;
     
     // @Override
     // public TradingBroker getBroker() {
@@ -44,6 +46,11 @@ public class TradeResult implements GetTradeInfo {
     public double getPrice() {
         // TODO Auto-generated method stub
         return this.price;
+    }
+
+    @Override
+    public string getTimestamp() {
+        return timestamp;
     }
 
     
