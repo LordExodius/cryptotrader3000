@@ -12,7 +12,7 @@ public class ViewTest {
         TradingBroker broker4 = new TradingBroker();
 
         // TEST 1: Adding trade results to TradeLog
-        TradeResult result1 = new TradeResult(broker1, )
+        // TradeResult result1 = new TradeResult(broker1, )
         
 
         
