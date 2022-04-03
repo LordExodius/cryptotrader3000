@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 
 import javax.swing.BorderFactory;
+import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.TitledBorder;
@@ -31,14 +32,18 @@ import java.util.ArrayList;
 
 import cryptotrader.gui.MainUI;
 
-public class TradeActivityTable extends Observer {
+public class TradeActivityTable implements Observer {
 
-    public void update(TradeLog tradeLog) {
+	@Override
+    public void update(Subject tradeLog) {
         // TODO Auto-generated method stub
-        createTableOutput(tradeLog.getResults());
+        // createTableOutput(tradeLog.getResults());
+		createTableOutput(tradeLog);
     }
 
-    private void createTableOutput(ArrayList<TradeResult> entries) {
+    public void createTableOutput(Subject tradeLog) {
+
+		ArrayList<TradeResult> entries = ((TradeLog)(tradeLog)).getResults();
 
         Object[] columnNames = {"Trader","Strategy","CryptoCoin","Action","Quantity","Price","Date"};
 
@@ -66,7 +71,7 @@ public class TradeActivityTable extends Observer {
 
     }
 
-    private void createTableOutput() {
+    public static void createTableOutput() {
 
         // Dummy dates for demo purposes. These should come from selection menu
 		Object[] columnNames = {"Trader","Strategy","CryptoCoin","Action","Quantity","Price","Date"};
@@ -105,5 +110,15 @@ public class TradeActivityTable extends Observer {
 		MainUI.getInstance().updateStats(scrollPane);
         
     }
+
+	public static void main(String[] args) {
+		JFrame frame = MainUI.getInstance();
+		frame.setSize(900, 600);
+		frame.pack();
+		frame.setVisible(true);
+
+		TradeActivityTable table = new TradeActivityTable();
+		table.createTableOutput();
+	}
     
 }

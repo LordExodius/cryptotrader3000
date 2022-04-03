@@ -33,16 +33,18 @@ import java.util.HashMap;
 import cryptotrader.gui.MainUI;
 import cryptotrader.trade.TradingBroker;
 
-public class TradeActivityGraph extends Observer {
+public class TradeActivityGraph implements Observer {
 
-    public void update(TradeLog tradeLog) {
+    @Override
+    public void update(Subject tradeLog) {
         // TODO Auto-generated method stub
-        createBarOutput(tradeLog.getResults());
+        createBarOutput(tradeLog);
+        // createBar();
 	}
 
-    public void createBarOutput(ArrayList<TradeResult> entries) {
+    public void createBarOutput(Subject tradeLog) {
 
-        System.out.println("Bar Output");
+        ArrayList<TradeResult> entries = ((TradeLog)(tradeLog)).getResults();
 
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
@@ -57,8 +59,8 @@ public class TradeActivityGraph extends Observer {
             }
         }
 
-        brokerActionsMap.forEach((broker,actions) -> {
-            dataset.setValue(actions, broker.getName(), broker.getStrategy().getName());
+        brokerActionsMap.forEach((key,value) -> {
+            dataset.setValue(value, key.getName() == null ? "" : key.getName(), key.getStrategy().getName());
         });
 
 		CategoryPlot plot = new CategoryPlot();
