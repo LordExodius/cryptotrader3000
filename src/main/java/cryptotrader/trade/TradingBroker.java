@@ -21,7 +21,7 @@ public class TradingBroker implements UpdateBroker, ExecuteTrade {
         nextID++;
         this.numTrades = 0;
         this.coinList = new ArrayList<String>();
-        this.strategy = new StrategyA();
+        this.strategy = null;
     }
 
     /**
@@ -35,7 +35,7 @@ public class TradingBroker implements UpdateBroker, ExecuteTrade {
             nextID = brokerID + 1;
         this.numTrades = 0;
         this.coinList = new ArrayList<String>();
-        this.strategy = new StrategyA();
+        this.strategy = null;
     }
 
     /**
