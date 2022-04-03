@@ -60,7 +60,7 @@ public class ViewTest {
 
         log.notifyObservers();
 
-        // TEST 3: Adding Results (performing trades) to TradeLog updates TradeActivityGraph and TradeActivityTable.
+        // TEST 3: Adding Results to TradeLog (controlling the model) updates TradeActivityGraph and TradeActivityTable (the views).
 
         Scanner input = new Scanner(System.in);
         System.out.println("Press enter to add more results");

@@ -32,6 +32,10 @@ import java.util.ArrayList;
 
 import cryptotrader.gui.MainUI;
 
+/**
+ * Observer class which represents the trade activity table on the UI. Acts as one of the views 
+ * in the MVC, which updates whenever any TradeResults are added to the TradeLog.
+ */
 public class TradeActivityTable implements Observer {
 
 	@Override
@@ -41,6 +45,14 @@ public class TradeActivityTable implements Observer {
 		createTableOutput(tradeLog);
     }
 
+	/**
+     * Helper method which creates a table of the past trades with the TradeLog as 
+	 * the model for the view. Uses the TradeLog's list of TradeResult's to 
+	 * compute the number of actions for each TradingBroker, and renders the bar 
+	 * graph with these values.
+	 * 
+     * @param tradeLog the log of trades (or TradeResults) which is the subject of the observer.
+     */
     public void createTableOutput(Subject tradeLog) {
 
 		ArrayList<TradeResult> entries = ((TradeLog)(tradeLog)).getResults();
@@ -71,6 +83,9 @@ public class TradeActivityTable implements Observer {
 
     }
 
+	/**
+     * Helper method which creates a activity table component with hard-coded values.
+     */
     public static void createTableOutput() {
 
         // Dummy dates for demo purposes. These should come from selection menu

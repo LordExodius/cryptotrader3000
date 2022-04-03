@@ -33,7 +33,12 @@ import java.util.HashMap;
 import cryptotrader.gui.MainUI;
 import cryptotrader.trade.TradingBroker;
 
+/**
+ * Observer class which represents the bar graph on the UI. Acts as one of the views 
+ * in the MVC, which updates whenever any TradeResults are added to the TradeLog.
+ */
 public class TradeActivityGraph implements Observer {
+    
 
     @Override
     public void update(Subject tradeLog) {
@@ -42,14 +47,23 @@ public class TradeActivityGraph implements Observer {
         // createBar();
 	}
 
-    public void createBarOutput(Subject tradeLog) {
+    /**
+     * Helper method which creates a bar output with the TradeLog as the model for the view.
+     * Uses the TradeLog's list of TradeResult's to compute the number of actions
+     * for each TradingBroker, and renders the bar graph with these values.
+     * 
+     * @param tradeLog the log of trades (or TradeResults) which is the subject of the observer.
+     */
+    private void createBarOutput(Subject tradeLog) {
 
         ArrayList<TradeResult> entries = ((TradeLog)(tradeLog)).getResults();
 
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
+        // A HashMap whose keys are the TradingBrokers, which have a corresponding number of actions Integer value.
         HashMap<TradingBroker,Integer> brokerActionsMap = new HashMap<TradingBroker,Integer>();
 
+        // Counts the number of actions performed by each TradingBroker.
         for (TradeResult entry : entries) {
             if (brokerActionsMap.containsKey(entry.getBroker())) {
                 int actions = brokerActionsMap.get(entry.getBroker());
@@ -59,6 +73,7 @@ public class TradeActivityGraph implements Observer {
             }
         }
 
+        // Uses the HashMap to add to the dataset.
         brokerActionsMap.forEach((key,value) -> {
             dataset.setValue(value, key.getName() == null ? "" : key.getName(), key.getStrategy().getName());
         });
@@ -88,6 +103,9 @@ public class TradeActivityGraph implements Observer {
 
     }
 
+    /**
+     * Helper method which creates a bar graph component with hard-coded values.
+     */
     private void createBar() {
 		
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
