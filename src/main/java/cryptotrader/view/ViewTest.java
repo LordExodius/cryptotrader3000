@@ -3,6 +3,8 @@ package cryptotrader.view;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JFrame;
+
 import cryptotrader.gui.MainUI;
 import cryptotrader.trade.StrategyA;
 import cryptotrader.trade.Trade;
@@ -12,7 +14,10 @@ public class ViewTest {
 
     public static void main(String[] args) {
 
-        MainUI mainUI = MainUI.getInstance();
+        JFrame frame = MainUI.getInstance();
+		frame.setSize(900, 600);
+		frame.pack();
+		frame.setVisible(true);
 
         StrategyA strategyA = new StrategyA();
         

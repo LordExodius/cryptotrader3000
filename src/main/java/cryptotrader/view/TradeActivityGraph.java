@@ -42,6 +42,8 @@ public class TradeActivityGraph extends Observer {
 
     public void createBarOutput(ArrayList<TradeResult> entries) {
 
+        System.out.println("Bar Output");
+
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
         HashMap<TradingBroker,Integer> brokerActionsMap = new HashMap<TradingBroker,Integer>();
