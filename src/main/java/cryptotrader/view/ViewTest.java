@@ -3,6 +3,7 @@ package cryptotrader.view;
 import java.util.ArrayList;
 import java.util.List;
 
+import cryptotrader.gui.MainUI;
 import cryptotrader.trade.StrategyA;
 import cryptotrader.trade.Trade;
 import cryptotrader.trade.TradingBroker;
@@ -10,6 +11,8 @@ import cryptotrader.trade.TradingBroker;
 public class ViewTest {
 
     public static void main(String[] args) {
+
+        MainUI mainUI = MainUI.getInstance();
 
         StrategyA strategyA = new StrategyA();
         
@@ -33,10 +36,26 @@ public class ViewTest {
         log.addResults(new ArrayList<TradeResult>(
             List.of(result1,result2,result3,result4)));
 
-        log.getResults().forEach((result) -> {
-            System.out.println(result.getResultObj().toString());
-        });
+        printResults(log.getResults());
 
+        // TEST 2: Render TradeActivityGraph and TradeActivityTable
+
+        TradeActivityGraph graph = new TradeActivityGraph();
+        TradeActivityTable table = new TradeActivityTable();
+        
+        log.attach(graph);
+        log.attach(table);
+
+        log.notifyObservers();
+
+    }
+
+    private static void printResults(ArrayList<TradeResult> results) {
+        results.forEach((result) -> {
+            Object[] resultObj = result.getResultObj();
+            System.out.printf("Name: %s, Strategy: %s, Coin: %s, Action: %s, Quantity: %s, Price: %s, Date: %s\n",
+            resultObj[0], resultObj[1], resultObj[2], resultObj[3], resultObj[4], resultObj[5], resultObj[6]);
+        });
     }
     
 }
