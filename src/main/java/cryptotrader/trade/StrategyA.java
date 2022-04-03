@@ -41,7 +41,7 @@ public class StrategyA extends TradingStrategy {
         ArrayList<String> interestedCoins = new ArrayList<>(coinsIn.keySet());
 
         if (checkCoins(interestedCoins) && coinsIn.get("BTC").getPrice() <= 50000 && adaPrice > 2) {
-            TradeResult res = new TradeResult(null, this, "ADA", "buy", 10, adaPrice, "1970-01-01 00:00");
+            TradeResult res = new TradeResult(null, this, "ADA", "buy", 10, adaPrice);
             return res;
         }
         
