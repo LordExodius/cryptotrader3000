@@ -61,14 +61,16 @@ public class User {
             coinInfo = coinAPI.getData(coinNames);
             // pass each trader the coins that they are interested in
             for (TradingBroker trader : traderList.getList()) {
-                // filter out the coins that this trader is interested in
-                HashMap<String, Coin> interestedCoins = new HashMap<String, Coin>();
-                for (String interestedCoinName : trader.getCoinList()) {
-                    interestedCoins.put(interestedCoinName, coinInfo.get(interestedCoinName));
+                if (trader.getActive()) {
+                    // filter out the coins that this trader is interested in
+                    HashMap<String, Coin> interestedCoins = new HashMap<String, Coin>();
+                    for (String interestedCoinName : trader.getCoinList()) {
+                        interestedCoins.put(interestedCoinName, coinInfo.get(interestedCoinName));
+                    }
+                    // execute the trade for this trader
+                    TradeResult result = trader.executeTrade(interestedCoins);
+                    tradeResults.add(result);
                 }
-                // execute the trade for this trader
-                TradeResult result = trader.executeTrade(interestedCoins);
-                tradeResults.add(result);
             }
         } catch (CoinAPIException e) {
             System.out.println(e.getMessage());
