@@ -5,6 +5,12 @@ import java.util.HashMap;
 
 import cryptotrader.view.TradeResult;
 
+/**
+ * A class that represents a trading broker
+ * @author Ben Asokanthan, Jackson Howe
+ * @version 1.0
+ */
+
 public class TradingBroker implements UpdateBroker, ExecuteTrade {
     private static int nextID = 1;
     private int brokerID;

@@ -1,5 +1,11 @@
 package cryptotrader.trade;
 
+/**
+ * A class that represents a coin object generated from the CoinGecko API call.
+ * @author Jackson Howe
+ * @version 1.0
+ */
+
 public class Coin {
     private String name;
     private double price;

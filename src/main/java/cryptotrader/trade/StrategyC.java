@@ -6,6 +6,12 @@ import java.util.HashMap;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 
+/**
+ * A subclass of strategy
+ * @author Jackson Howe
+ * @version 1.0
+ */
+
 public class StrategyC extends TradingStrategy {
 
     /**

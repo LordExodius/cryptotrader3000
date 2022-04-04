@@ -6,6 +6,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
+/**
+ * A class that holds and performs operations on the active list of traders
+ * @author Ben Asokanthan, Jackson Howe
+ * @version 1.0
+ */
+
 public class TraderList implements UpdateTraderList {
 
     private ArrayList<TradingBroker> traderList;
