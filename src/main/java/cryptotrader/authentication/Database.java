@@ -241,7 +241,7 @@ public class Database implements DatabaseAuthenticate, GetFromDatabase, AddToDat
             ArrayList<TradeResult> tradeResults = new ArrayList<TradeResult>();
             while (results.next()) {
                 // get the trader from the trader list with the specified name
-                TradingBroker trader = traderList.getTrader(results.getString("brokerID"));
+                TradingBroker trader = traderList.getTrader(results.getString("name"));
                 // create a new strategy object according to the strategy name of this result
                 TradingStrategy strategy = creator.create(results.getString("strategy"));
                 // create the trade result to be appended to the trade log
