@@ -72,6 +72,25 @@ public class TradeResult implements GetTradeInfo {
         this.timestamp = date.format(myFormatObj);
     }
     
+    public TradeResult(
+        TradingBroker broker,
+        TradingStrategy strategy,
+        String coinName,
+        String action,
+        int quantity,
+        double price,
+        String timestamp
+    ) {
+        this.broker = broker;
+        this.strategy = strategy;
+        this.coinName = coinName;
+        this.action = action;
+        this.quantity = quantity;
+        this.price = price;
+        this.timestamp = timestamp;
+    }
+    
+
     @Override
     public TradingBroker getBroker() {
         // TODO Auto-generated method stub
