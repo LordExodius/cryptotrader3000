@@ -38,6 +38,9 @@ public class LoginUI extends JFrame implements ActionListener {
 
     Database database = Database.getInstance();
 
+    /**
+     * Default constructs the LoginUI, creating the button and input layouts.
+     */
     public LoginUI()
     {
         super("Cryptotrader 3000 - Login");

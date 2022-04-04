@@ -34,20 +34,35 @@ import cryptotrader.view.TradeActivityGraph;
 import cryptotrader.view.TradeActivityTable;
 import cryptotrader.view.TradeLog;
 
+/**
+ * A class representing the main interface of the application.
+ * Implements the singleton pattern, as only one instance of the main UI
+ * should exist at any given moment.
+ * 
+ * @author David Tran
+ * @version 1.0
+ */
 public class MainUI extends JFrame implements ActionListener {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
 
+	// singleton instance of the UI
 	private static MainUI instance;
+
+	// panel containing the trade activity table and graph
 	private JPanel stats;
+
+	// views for the activity table and graph 
 	private TradeActivityTable tradeTable;
 	private TradeActivityGraph tradeGraph;
 
+	// the table and model for the table that manages traders
 	private DefaultTableModel dtm;
 	private JTable table;
 
+	/**
+	 * Gets the singleton instance of this class.
+	 * 
+	 * @return the singleton instance of this class
+	 */
 	public static MainUI getInstance() {
 		if (instance == null)
 			instance = new MainUI();
@@ -63,36 +78,17 @@ public class MainUI extends JFrame implements ActionListener {
 		// Set top bar
 		JPanel north = new JPanel();
 
+		// create Perform Trade button
 		JButton trade = new JButton("Perform Trade");
 		trade.setActionCommand("refresh");
 		trade.addActionListener(this);
-
 		JPanel south = new JPanel();
-		
 		south.add(trade);
 
-		dtm = new DefaultTableModel(new Object[] { "Trading Client", "Coin List", "Strategy Name" }, 0);
+		initializeViews();
 
-		tradeTable = new TradeActivityTable();
-		tradeGraph = new TradeActivityGraph();
-
-		User user = User.getInstance();
-		TradeLog tradeLog = user.getTradeLog();
-		tradeLog.attach(tradeTable);
-		tradeLog.attach(tradeGraph);
-
-		TraderList traderList = user.getTraderList();
-		for (TradingBroker t : traderList.getList()) {
-			Object[] row = {
-					t.getName(),
-					String.join(",", t.getCoinList()),
-					t.getStrategy().getName(),
-			};
-			dtm.addRow(row);
-		}
 		table = new JTable(dtm);
 		table.setFillsViewportHeight(true);
-		// table.setPreferredSize(new Dimension(600, 300));
 		JScrollPane scrollPane = new JScrollPane(table);
 		scrollPane.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "Trading Client Actions",
 				TitledBorder.CENTER, TitledBorder.TOP));
@@ -116,17 +112,13 @@ public class MainUI extends JFrame implements ActionListener {
 		
 
 		JPanel east = new JPanel();
-//		east.setLayout();
 		east.setLayout(new BoxLayout(east, BoxLayout.Y_AXIS));
-//		east.add(table);
 		east.add(scrollPane);
 		JPanel buttons = new JPanel();
 		buttons.setLayout(new BoxLayout(buttons, BoxLayout.X_AXIS));
 		buttons.add(addRow);
 		buttons.add(remRow);
 		east.add(buttons);
-//		east.add(selectedTickerListLabel);
-//		east.add(selectedTickersScrollPane);
 
 		// Set charts region
 		JPanel west = new JPanel();
@@ -140,28 +132,61 @@ public class MainUI extends JFrame implements ActionListener {
 		getContentPane().add(east, BorderLayout.EAST);
 		getContentPane().add(west, BorderLayout.CENTER);
 		getContentPane().add(south, BorderLayout.SOUTH);
-//		getContentPane().add(west, BorderLayout.WEST);
 	}
 
+	/**
+	 * Initialize the views (trader table, graph, and log) with data loaded
+	 * in the TraderList and TradeLog.
+	 */
+	public void initializeViews() {
+		dtm = new DefaultTableModel(new Object[] { "Trading Client", "Coin List", "Strategy Name" }, 0);
+
+		tradeTable = new TradeActivityTable();
+		tradeGraph = new TradeActivityGraph();
+
+		User user = User.getInstance();
+		TradeLog tradeLog = user.getTradeLog();
+		tradeLog.attach(tradeTable);
+		tradeLog.attach(tradeGraph);
+
+		TraderList traderList = user.getTraderList();
+		for (TradingBroker t : traderList.getList()) {
+			Object[] row = {
+					t.getName(),
+					String.join(",", t.getCoinList()),
+					t.getStrategy().getName(),
+			};
+			dtm.addRow(row);
+		}
+	}
+
+	/**
+	 * Update the JPanel containing the stats for the activity graph and trade log.
+	 * @param component
+	 */
 	public void updateStats(JComponent component) {
 		stats.add(component);
 		stats.revalidate();
 	}
 
+	/**
+	 * Clear the stats for the activity table and graph.
+	 * Call this before updating the stats.
+	 */
 	public void removeAllStats() {
 		stats.removeAll();
 	}
 
-	public static void main(String[] args) {
-		JFrame frame = MainUI.getInstance();
-		frame.setSize(900, 600);
-		frame.pack();
-		frame.setVisible(true);
-	}
-
+	/**
+	 * Override event handlers for "Perform Trades", "Add Row", and "Remove Row"
+	 * Uses the Command pattern to select the appropriate action to perform
+	 * 
+	 * @param e the ActionEvent to be performed
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String command = e.getActionCommand();
+		// "Perform Trades" command
 		if ("refresh".equals(command)) {
 			// set all traders to inactive: only traders currently in the list will be set to active
 			User user = User.getInstance();
@@ -169,6 +194,7 @@ public class MainUI extends JFrame implements ActionListener {
 			for (TradingBroker t : traderList.getList()) {
 				t.setActive(false);
 			}
+			// set all traders in the trader table to active and add new traders to the list
 			for (int count = 0; count < dtm.getRowCount(); count++){
 					Object traderObject = dtm.getValueAt(count, 0);
 					if (traderObject == null) {
@@ -204,18 +230,17 @@ public class MainUI extends JFrame implements ActionListener {
 					trader.updateStrategy(strategy);
 					traderList.addTrader(trader);
 	        }
+			// perform trades on all active traders
 			try {
 				user.performTrades();
 			} catch (CoinAPIException err) {
 				new PopupUI(err.getMessage());
 			}
-			/**
-			 * DataVisualizationCreator creator = new DataVisualizationCreator();
-			 * creator.createCharts();
-			 */
 		} else if ("addTableRow".equals(command)) {
+			// "Add Row" command
 			dtm.addRow(new String[3]);
 		} else if ("remTableRow".equals(command)) {
+			// "Remove Row" command
 			int selectedRow = table.getSelectedRow();
 			if (selectedRow != -1)
 				dtm.removeRow(selectedRow);
