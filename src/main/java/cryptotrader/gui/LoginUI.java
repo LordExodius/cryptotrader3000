@@ -14,14 +14,13 @@ import javax.swing.plaf.DimensionUIResource;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowAdapter;
 import java.awt.BorderLayout;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 
 public class LoginUI extends JFrame implements ActionListener {
-
-    private String username = "";
-    private String password = "";
 
     // Components
     private JLabel status;
@@ -98,7 +97,7 @@ public class LoginUI extends JFrame implements ActionListener {
         if(database.authenticate(userField.getText(), passField.getText()))
         {
             initUser();
-            loginFrame.dispatchEvent(e);
+            loginFrame.setVisible(false);
         }
         else
         {
@@ -118,10 +117,24 @@ public class LoginUI extends JFrame implements ActionListener {
 
     private void initMain()
     {
-        JFrame frame = MainUI.getInstance();
-		frame.setSize(900, 600);
-		frame.pack();
-		frame.setVisible(true);
+        JFrame mainFrame = MainUI.getInstance();
+		mainFrame.setSize(900, 600);
+		mainFrame.pack();
+		mainFrame.setVisible(true);
+        mainFrame.addWindowListener(new WindowAdapter() {
+            // When closing MainUI, save TraderList and TradeLog instances to db
+            @Override
+            public void windowClosing(WindowEvent e) {
+                database.addTraders(User.getInstance().getTraderList());
+                database.addTradeLog(User.getInstance().getTradeLog());
+            }
+            
+            // When MainUI is closed, close the loginFrame as well
+            @Override
+            public void windowClosed(WindowEvent e) {
+            loginFrame.dispatchEvent(new WindowEvent(loginFrame, WindowEvent.WINDOW_CLOSING));
+            }
+        });
     }
 
     public static void main(String[] args)

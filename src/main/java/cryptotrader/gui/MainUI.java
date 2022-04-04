@@ -72,47 +72,11 @@ public class MainUI extends JFrame implements ActionListener {
 		super("Cryptotrader 3000");
 
 		// Set top bar
-
-
 		JPanel north = new JPanel();
-
-//		north.add(strategyList);
-
-		// Set bottom bar
-//		JLabel from = new JLabel("From");
-//		UtilDateModel dateModel = new UtilDateModel();
-//		Properties p = new Properties();
-//		p.put("text.today", "Today");
-//		p.put("text.month", "Month");
-//		p.put("text.year", "Year");
-//		JDatePanelImpl datePanel = new JDatePanelImpl(dateModel, p);
-//		@SuppressWarnings("serial")
-//		JDatePickerImpl datePicker = new JDatePickerImpl(datePanel, new AbstractFormatter() {
-//			private String datePatern = "dd/MM/yyyy";
-//
-//			private SimpleDateFormat dateFormatter = new SimpleDateFormat(datePatern);
-//
-//			@Override
-//			public Object stringToValue(String text) throws ParseException {
-//				return dateFormatter.parseObject(text);
-//			}
-//
-//			@Override
-//			public String valueToString(Object value) throws ParseException {
-//				if (value != null) {
-//					Calendar cal = (Calendar) value;
-//					return dateFormatter.format(cal.getTime());
-//				}
-//
-//				return "";
-//			}
-//		});
 
 		JButton trade = new JButton("Perform Trade");
 		trade.setActionCommand("refresh");
 		trade.addActionListener(this);
-
-
 
 		JPanel south = new JPanel();
 		
