@@ -15,6 +15,7 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.DateAxis;
 import org.jfree.chart.axis.LogAxis;
+import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.category.BarRenderer;
@@ -64,21 +65,33 @@ public class TradeActivityGraph implements Observer {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
         // A HashMap whose keys are the TradingBrokers, which have a corresponding number of actions Integer value.
-        HashMap<TradingBroker,Integer> brokerActionsMap = new HashMap<TradingBroker,Integer>();
+        HashMap<TradingBroker, HashMap<String, Integer>> brokerActionsMap = new HashMap<TradingBroker,HashMap<String, Integer>>();
 
         // Counts the number of actions performed by each TradingBroker.
         for (TradeResult entry : entries) {
             if (brokerActionsMap.containsKey(entry.getBroker())) {
-                int actions = brokerActionsMap.get(entry.getBroker());
-                brokerActionsMap.replace(entry.getBroker(), actions + 1);
+                HashMap<String, Integer> actions = brokerActionsMap.get(entry.getBroker());
+                String strategyName = entry.getStrategy().getName();
+				actions.put(strategyName, actions.get(strategyName) + 1);
             } else {
-                brokerActionsMap.put(entry.getBroker(), 1);
+				HashMap<String, Integer> strategyMap = new HashMap<String, Integer>();
+				strategyMap.put("Strategy-A", 0);
+				strategyMap.put("Strategy-B", 0);
+				strategyMap.put("Strategy-C", 0);
+				strategyMap.put("Strategy-D", 0);
+				String strategyName = entry.getStrategy().getName();
+				strategyMap.put(strategyName, strategyMap.get(strategyName) + 1);
+                brokerActionsMap.put(entry.getBroker(), strategyMap);
             }
         }
 
         // Uses the HashMap to add to the dataset.
         brokerActionsMap.forEach((key,value) -> {
-            dataset.setValue(value, key.getName() == null ? "" : key.getName(), key.getStrategy().getName());
+			for(String strategyKey : value.keySet())
+			{
+				dataset.setValue(value.get(strategyKey), key.getName() == null ? "" : key.getName(), strategyKey);
+			}
+            
         });
 
 		CategoryPlot plot = new CategoryPlot();
@@ -88,7 +101,7 @@ public class TradeActivityGraph implements Observer {
 		plot.setRenderer(0, barrenderer1);
 		CategoryAxis domainAxis = new CategoryAxis("Strategy");
 		plot.setDomainAxis(domainAxis);
-		LogAxis rangeAxis = new LogAxis("Actions(Buys or Sells)");
+		NumberAxis rangeAxis = new NumberAxis("Actions(Buys or Sells)");
 		rangeAxis.setRange(new Range(0.1, 20.0));
 		plot.setRangeAxis(rangeAxis);
 
@@ -127,7 +140,7 @@ public class TradeActivityGraph implements Observer {
 		plot.setRenderer(0, barrenderer1);
 		CategoryAxis domainAxis = new CategoryAxis("Strategy");
 		plot.setDomainAxis(domainAxis);
-		LogAxis rangeAxis = new LogAxis("Actions(Buys or Sells)");
+		NumberAxis rangeAxis = new NumberAxis("Actions(Buys or Sells)");
 		rangeAxis.setRange(new Range(0.1, 20.0));
 		plot.setRangeAxis(rangeAxis);
 
