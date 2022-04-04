@@ -24,7 +24,11 @@ public class User {
     // currently active user
     private String username;
 
-    private User() {}
+    private User() {
+        this.tradeLog = new TradeLog();
+        this.traderList = new TraderList();
+        
+    }
 
     /**
      * Returns a singleton instance for this class.

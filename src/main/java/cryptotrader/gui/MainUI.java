@@ -218,6 +218,9 @@ public class MainUI extends JFrame implements ActionListener {
 
 	private void performTrades() {
 
+		
+
+		// parse table to create all the traders
 	}
 
 }
