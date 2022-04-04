@@ -31,7 +31,7 @@ public class StrategyC extends TradingStrategy {
 
     @Override
     public String getName() {
-        return "Strategy C";
+        return "Strategy-C";
     }
 
     public StrategyC() {

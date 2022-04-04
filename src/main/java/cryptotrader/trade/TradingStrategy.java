@@ -42,9 +42,6 @@ public abstract class TradingStrategy implements Trade {
         return true;
     }
 
-    public String getName()
-    {
-        return null;
-    }
+    abstract public String getName();
     
 }
