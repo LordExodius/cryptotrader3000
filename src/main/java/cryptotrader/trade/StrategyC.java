@@ -47,7 +47,11 @@ public class StrategyC extends TradingStrategy {
     public TradeResult trade(HashMap<String, Coin> coinsIn) {
         ArrayList<String> interestedCoins = new ArrayList<>(coinsIn.keySet());
         if (!checkCoins(interestedCoins))
+        {
+            // TODO: POPUP WHEN TRADE DOES NOT HAVE CORRECT INFORMATION
             return new TradeResult(null, this, "ADA", "Fail", 0, 0);
+        }
+            
 
         // Trading logic
         if (coinsIn.get("ETH").getPrice() > 3450

@@ -33,7 +33,6 @@ import cryptotrader.trade.TraderList;
 import cryptotrader.trade.TradingBroker;
 import cryptotrader.trade.TradingStrategy;
 import cryptotrader.user.User;
-import cryptotrader.utils.DataVisualizationCreator;
 import cryptotrader.view.TradeActivityGraph;
 import cryptotrader.view.TradeActivityTable;
 import cryptotrader.view.TradeLog;
@@ -209,6 +208,11 @@ public class MainUI extends JFrame implements ActionListener {
 					if (trader == null) {
 						// trader doesn't exist: create it
 						trader = new TradingBroker(traderName);
+					}
+					if (trader.getActive() == true)
+					{
+						// TODO: POPUP
+						break;
 					}
 					trader.setActive(true);
 					trader.updateCoins(new ArrayList<String>(Arrays.asList(coinNames)));

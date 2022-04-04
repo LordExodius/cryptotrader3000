@@ -44,7 +44,11 @@ public class StrategyA extends TradingStrategy {
     public TradeResult trade (HashMap<String, Coin> coinsIn) {
         ArrayList<String> interestedCoins = new ArrayList<>(coinsIn.keySet());
         if (!checkCoins(interestedCoins))
+        {
+            // TODO: POPUP WHEN TRADE DOES NOT HAVE CORRECT INFORMATION
             return new TradeResult(null, this, "ADA", "Fail", 0, 0);
+        }
+            
 
         double adaPrice = coinsIn.get("ADA").getPrice();
         if (coinsIn.get("BTC").getPrice() <= 50000 && adaPrice > 2) {

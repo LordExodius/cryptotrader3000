@@ -3,8 +3,6 @@ package cryptotrader.trade;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import com.google.gson.JsonObject;
-
 import cryptotrader.view.TradeResult;
 
 /**

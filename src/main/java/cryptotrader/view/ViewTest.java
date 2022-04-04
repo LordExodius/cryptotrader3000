@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import javax.swing.JFrame;
-
 import cryptotrader.gui.MainUI;
 import cryptotrader.trade.StrategyA;
 import cryptotrader.trade.TradingBroker;
