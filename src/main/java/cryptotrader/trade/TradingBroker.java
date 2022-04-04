@@ -1,6 +1,7 @@
 package cryptotrader.trade;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.google.gson.JsonObject;
 
@@ -53,7 +54,7 @@ public class TradingBroker implements UpdateBroker, ExecuteTrade {
     }
 
     @Override
-    public TradeResult executeTrade() {
+    public TradeResult executeTrade(HashMap<String, Coin> coinInfo) {
         // TODO Auto-generated method stub
         return null;
     }
