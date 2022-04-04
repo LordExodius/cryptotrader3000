@@ -167,7 +167,7 @@ public class TradeResult implements GetTradeInfo {
      * @return Object[] an array of strings to be used by TradeActivityGraph and TradeActivityTable.
      */
     public Object[] getResultObj() {
-        Object[] obj = {broker.getName(), broker.getStrategy().getName(), coinName, action, quantity, price, timestamp};
+        Object[] obj = {broker.getName(), strategy.getName(), coinName, action, quantity, price, timestamp};
         return obj;
     }
 
