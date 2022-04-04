@@ -203,7 +203,6 @@ public class MainUI extends JFrame implements ActionListener {
 					trader.updateStrategy(strategy);
 					traderList.addTrader(trader);
 	        }
-			stats.removeAll();
 			user.performTrades();
 			/**
 			 * DataVisualizationCreator creator = new DataVisualizationCreator();

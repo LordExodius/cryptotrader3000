@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import cryptotrader.trade.TraderList;
 import cryptotrader.trade.CoinAPI;
+import cryptotrader.gui.MainUI;
 import cryptotrader.trade.Coin;
 import cryptotrader.trade.CoinAPIException;
 import cryptotrader.trade.TradingBroker;
@@ -59,6 +60,7 @@ public class User {
         ArrayList<TradeResult> tradeResults = new ArrayList<TradeResult>();
         try {
             coinInfo = coinAPI.getData(coinNames);
+            MainUI.getInstance().removeAllStats();
             // pass each trader the coins that they are interested in
             for (TradingBroker trader : traderList.getList()) {
                 if (trader.getActive()) {
