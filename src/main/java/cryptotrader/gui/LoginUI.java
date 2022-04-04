@@ -118,7 +118,6 @@ public class LoginUI extends JFrame implements ActionListener {
         user.setUsername(userField.getText());
         user.setTraderList(database.getTraders());
         user.setTradeLog(database.getTradeLog(user.getTraderList()));
-
         initMain();
     }
 
@@ -138,6 +137,8 @@ public class LoginUI extends JFrame implements ActionListener {
                 loginFrame.dispatchEvent(new WindowEvent(loginFrame, WindowEvent.WINDOW_CLOSING));
             }
         });
+        
+        User.getInstance().getTradeLog().notifyObservers();
     }
 
     public static void main(String[] args)
