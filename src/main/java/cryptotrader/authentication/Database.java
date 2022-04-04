@@ -183,6 +183,10 @@ public class Database implements DatabaseAuthenticate, GetFromDatabase, AddToDat
         }
     }
 
+    /**
+     * Retrieves all traders associated with currently active User instance from database
+     * @return TraderList of all traders saved in database with matching username
+     */
     @Override
     public TraderList getTraders() {
         TraderList list = new TraderList();
@@ -225,7 +229,6 @@ public class Database implements DatabaseAuthenticate, GetFromDatabase, AddToDat
     /**
      * Get the list of trade results stored in the database for the current user and
      * re-constructs a trade log.
-     * 
      * @param traderList a TraderList with which brokers in the TradeLog will be matched to
      */
     @Override

@@ -1,5 +1,6 @@
 package cryptotrader.trade;
 
+import cryptotrader.gui.PopupUI;
 import cryptotrader.view.TradeResult;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -48,6 +49,7 @@ public class StrategyD extends TradingStrategy {
         if (!checkCoins(interestedCoins))
         {
             // TODO: POPUP WHEN TRADE DOES NOT HAVE CORRECT INFORMATION
+            new PopupUI(getName() + " does not have the required coin information to proceed.");
             return new TradeResult(null, this, "SOL", "Fail", 0, 0);
         }
             

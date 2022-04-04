@@ -212,6 +212,7 @@ public class MainUI extends JFrame implements ActionListener {
 					if (trader.getActive() == true)
 					{
 						// TODO: POPUP
+						new PopupUI("A trader with the name \"" + trader.getName() + "\" already exists. Please remove the duplicate and try again.");
 						break;
 					}
 					trader.setActive(true);
