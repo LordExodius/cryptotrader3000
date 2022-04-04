@@ -68,9 +68,17 @@ public class TradingBroker implements UpdateBroker, ExecuteTrade {
     }
 
     @Override
+    /**
+     * Calls the strategy's trade method
+     * @param coinInfo
+     * @return TradeResult 
+     */
     public TradeResult executeTrade(HashMap<String, Coin> coinInfo) {
-        // TODO Auto-generated method stub
-        return null;
+        if (strategy != null) {
+            return strategy.trade(coinInfo);
+        } else {
+            return null;
+        }
     }
 
     @Override

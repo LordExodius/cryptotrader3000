@@ -114,7 +114,7 @@ public class Database implements DatabaseAuthenticate, GetFromDatabase, AddToDat
 
     @Override
     public void addTraders(TraderList traders) {
-        String add = "INSERT INTO brokers(user, name, numTrades, coinList, strategy) VALUES(?, ?, ?, ?, ?)";
+        String add = "INSERT INTO brokers(user, name, numTrades, coinList, strategy, active) VALUES(?, ?, ?, ?, ?, ?)";
         for(TradingBroker trader : traders.getList())
         {
             try
@@ -125,6 +125,7 @@ public class Database implements DatabaseAuthenticate, GetFromDatabase, AddToDat
                 statement.setInt(3, trader.getNumTrades());
                 statement.setString(4, String.join(",", trader.getCoinList()));
                 statement.setString(5, trader.getStrategy().getName());
+                statement.setString(6, String.valueOf(trader.getActive()));
                 statement.executeUpdate();
             }
             catch(SQLException e)
@@ -179,6 +180,7 @@ public class Database implements DatabaseAuthenticate, GetFromDatabase, AddToDat
                 tempBroker.updateStrategy(creator.create(results.getString("strategy")));
                 tempBroker.setNumTrades(results.getInt("numTrades"));
                 tempBroker.updateCoins(new ArrayList<String>(Arrays.asList(results.getString("coinList").split(",", 0))));
+                tempBroker.setActive(Boolean.valueOf(results.getString("active")));
                 list.addTrader(tempBroker);
             }
             return list;
