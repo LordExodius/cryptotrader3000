@@ -12,6 +12,12 @@ import java.awt.event.WindowEvent;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 
+/**
+ * A class representing a generic pop-up notification window.
+ * 
+ * @author Oscar Yu
+ * @version 1.0
+ */
 public class PopupUI extends JFrame implements ActionListener{
 
     // Components
@@ -20,7 +26,12 @@ public class PopupUI extends JFrame implements ActionListener{
     JFrame popupFrame;
     JPanel popupPanel;
 
-    // Constuctor for PopupUI
+    /**
+     * Create a PopupUI that shows a specific message.
+     * The Popup is shown upon construction
+     * 
+     * @param message the message to be displayed
+     */
     public PopupUI(String message)
     {
         popupFrame = new JFrame();
@@ -45,7 +56,7 @@ public class PopupUI extends JFrame implements ActionListener{
         popupFrame.pack();
         popupFrame.setVisible(true);
     }
-
+    
     @Override
     public void actionPerformed(ActionEvent e) {
         popupFrame.dispatchEvent(new WindowEvent(popupFrame, WindowEvent.WINDOW_CLOSING));
