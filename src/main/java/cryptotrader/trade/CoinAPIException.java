@@ -6,7 +6,7 @@ package cryptotrader.trade;
  * @version 1.0
  */
 
-public class CoinAPIException extends Exception {
+public class CoinAPIException extends RuntimeException {
     public CoinAPIException (String message) {
         super(message);
     }

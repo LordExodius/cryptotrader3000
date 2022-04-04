@@ -63,10 +63,8 @@ public class CoinAPI {
 					+ responseCode);
 			}
 		} catch (IOException e) {
-			System.out.println("Error parsing the response object:");
-			System.err.println(e);
+			throw new CoinAPIException(e.getMessage());
 		}
-		return null;
 	}
 	
 	/**
