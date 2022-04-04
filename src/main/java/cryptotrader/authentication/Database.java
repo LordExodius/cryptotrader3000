@@ -23,8 +23,8 @@ public class Database implements DatabaseAuthenticate, GetFromDatabase, AddToDat
     /**
      * Databse contains 3 tables:
      * - creds(user text, pass text)
-     * - brokers(user text, brokerID int, name text, numTrades int, coinList text, strategy text)
-     * - results(user text, brokerID int, strategy text, coinName text, action text, quantity int, price real, date text)
+     * - brokers(user text, name text, numTrades int, coinList text, strategy text)
+     * - results(user text, name text, strategy text, coinName text, action text, quantity int, price real, date text)
      */
 
     private static Database instance = new Database();
@@ -114,18 +114,17 @@ public class Database implements DatabaseAuthenticate, GetFromDatabase, AddToDat
 
     @Override
     public void addTraders(TraderList traders) {
-        String add = "INSERT INTO brokers(user, brokerID, name, numTrades, coinList, strategy) VALUES(?, ?, ?, ?, ?, ?)";
+        String add = "INSERT INTO brokers(user, name, numTrades, coinList, strategy) VALUES(?, ?, ?, ?, ?)";
         for(TradingBroker trader : traders.getList())
         {
             try
             {
                 PreparedStatement statement = connection.prepareStatement(add);
                 statement.setString(1, User.getInstance().getUsername());
-                statement.setInt(2, trader.getID());
-                statement.setString(3, trader.getName());
-                statement.setInt(4, trader.getNumTrades());
-                statement.setString(5, String.join(",", trader.getCoinList()));
-                statement.setString(6, trader.getStrategy().getName());
+                statement.setString(2, trader.getName());
+                statement.setInt(3, trader.getNumTrades());
+                statement.setString(4, String.join(",", trader.getCoinList()));
+                statement.setString(5, trader.getStrategy().getName());
                 statement.executeUpdate();
             }
             catch(SQLException e)
@@ -138,14 +137,14 @@ public class Database implements DatabaseAuthenticate, GetFromDatabase, AddToDat
 
     @Override
     public void addTradeLog(TradeLog log) {
-        String add = "INSERT INTO results(user, brokerID, strategy, coinName, action, quantity, price, date) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+        String add = "INSERT INTO results(user, name, strategy, coinName, action, quantity, price, date) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
         for(TradeResult result : log.getResults())
         {
             try
             {
                 PreparedStatement statement = connection.prepareStatement(add);
                 statement.setString(1, User.getInstance().getUsername());
-                statement.setInt(2, result.getBroker().getID());
+                statement.setString(2, result.getBroker().getName());
                 statement.setString(3, result.getStrategy().getName());
                 statement.setString(4, result.getCoinName());
                 statement.setString(5, result.getActionType());
@@ -176,9 +175,8 @@ public class Database implements DatabaseAuthenticate, GetFromDatabase, AddToDat
             StrategyCreator creator = new StrategyCreator();
             while(results.next())
             {
-                tempBroker = new TradingBroker(results.getInt("brokerID"));
+                tempBroker = new TradingBroker(results.getString("name"));
                 tempBroker.updateStrategy(creator.create(results.getString("strategy")));
-                tempBroker.updateName(results.getString("name"));
                 tempBroker.setNumTrades(results.getInt("numTrades"));
                 tempBroker.updateCoins(new ArrayList<String>(Arrays.asList(results.getString("coinList").split(",", 0))));
                 list.addTrader(tempBroker);
@@ -208,8 +206,8 @@ public class Database implements DatabaseAuthenticate, GetFromDatabase, AddToDat
             StrategyCreator creator = new StrategyCreator();
             ArrayList<TradeResult> tradeResults = new ArrayList<TradeResult>();
             while (results.next()) {
-                // get the trader from the trader list with the specified broker ID
-                TradingBroker trader = traderList.getTrader(results.getInt("brokerID"));
+                // get the trader from the trader list with the specified name
+                TradingBroker trader = traderList.getTrader(results.getString("brokerID"));
                 // create a new strategy object according to the strategy name of this result
                 TradingStrategy strategy = creator.create(results.getString("strategy"));
                 // create the trade result to be appended to the trade log

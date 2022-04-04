@@ -28,6 +28,11 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
+import cryptotrader.trade.StrategyCreator;
+import cryptotrader.trade.TraderList;
+import cryptotrader.trade.TradingBroker;
+import cryptotrader.trade.TradingStrategy;
+import cryptotrader.user.User;
 import cryptotrader.utils.DataVisualizationCreator;
 
 public class MainUI extends JFrame implements ActionListener {
@@ -187,6 +192,12 @@ public class MainUI extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		String command = e.getActionCommand();
 		if ("refresh".equals(command)) {
+			// set all traders to inactive: only traders currently in the list will be set to active
+			User user = User.getInstance();
+			TraderList traderList = user.getTraderList();
+			for (TradingBroker t : traderList.getList()) {
+				t.setActive(false);
+			}
 			for (int count = 0; count < dtm.getRowCount(); count++){
 					Object traderObject = dtm.getValueAt(count, 0);
 					if (traderObject == null) {
@@ -206,7 +217,12 @@ public class MainUI extends JFrame implements ActionListener {
 						return;
 					}
 					String strategyName = strategyObject.toString();
-					System.out.println(traderName + " " + Arrays.toString(coinNames) + " " + strategyName);
+					TradingStrategy strategy = new StrategyCreator().create(strategyName);
+					TradingBroker trader = traderList.getTrader(traderName);
+					trader.setActive(true);
+					trader.updateCoins(new ArrayList<String>(Arrays.asList(coinNames)));
+					trader.updateStrategy(strategy);
+					user.performTrades();
 	        }
 			stats.removeAll();
 			DataVisualizationCreator creator = new DataVisualizationCreator();
@@ -219,12 +235,4 @@ public class MainUI extends JFrame implements ActionListener {
 				dtm.removeRow(selectedRow);
 		}
 	}
-
-	private void performTrades() {
-
-		
-
-		// parse table to create all the traders
-	}
-
 }
