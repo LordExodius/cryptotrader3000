@@ -140,18 +140,26 @@ public class CoinAPI {
 		for (String coin: dataIn) {
 	
 			String name;
-			if (coin == "BTC") {
-				name = "bitcoin";
-			} else if (coin == "ETH") {
-				name = "ethereum";
-			} else if (coin == "LTC") {
-				name = "litecoin";
-			} else if (coin == "ADA") {
-				name = "cardano";
-			} else if (coin == "SOL") {
-				name = "solana";
-			} else {
-				continue;
+			// convert ticker into name
+			switch (coin) {
+				case "BTC":
+					name = "bitcoin";
+					break;
+				case "ETH":
+					name = "ethereum";
+					break;
+				case "LTC":
+					name = "litecoin";
+					break;
+				case "ADA":
+					name = "cardano";
+					break;
+				case "SOL":
+					name = "solana";
+					break;
+				default:
+					// ignore this coin if not supported
+					continue;
 			}
 
 			double price = this.getPriceForCoin(name, date);
