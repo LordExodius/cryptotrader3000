@@ -14,8 +14,6 @@ import cryptotrader.view.TradeResult;
  */
 
 public class TradingBroker implements UpdateBroker, ExecuteTrade {
-    private static int nextID = 1;
-    private int brokerID;
     private String name;
     private int numTrades;
     private ArrayList<String> coinList;
@@ -26,39 +24,15 @@ public class TradingBroker implements UpdateBroker, ExecuteTrade {
      * Constructor
      */
     public TradingBroker() {
-        this.brokerID = nextID;
-        nextID++;
         this.numTrades = 0;
         this.coinList = new ArrayList<String>();
         this.strategy = null;
         this.active = true;
     }
 
-    /**
-     * Constructor
-     * @param brokerID
-     */
-    public TradingBroker(int brokerID)
-    {
-        this.brokerID = brokerID;
-        if(brokerID > nextID)
-            nextID = brokerID + 1;
-        this.numTrades = 0;
-        this.coinList = new ArrayList<String>();
-        this.strategy = null;
-    }
-
     public TradingBroker(String brokerName) {
         this();
         this.name = brokerName;
-    }
-
-    /**
-     * Get method for broker's ID
-     * @return brokerID
-     */
-    public int getID() {
-        return brokerID;
     }
 
     /**
