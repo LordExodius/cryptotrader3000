@@ -87,7 +87,7 @@ public class MainUI extends JFrame implements ActionListener {
 		
 		south.add(trade);
 
-		dtm = new DefaultTableModel(new Object[] { "Trading Client", "Coin List", "Strategy Name" }, 1);
+		dtm = new DefaultTableModel(new Object[] { "Trading Client", "Coin List", "Strategy Name" }, 0);
 
 		tradeTable = new TradeActivityTable();
 		tradeGraph = new TradeActivityGraph();
@@ -96,7 +96,6 @@ public class MainUI extends JFrame implements ActionListener {
 		TradeLog tradeLog = user.getTradeLog();
 		tradeLog.attach(tradeTable);
 		tradeLog.attach(tradeGraph);
-		tradeLog.notifyObservers();
 
 		TraderList traderList = user.getTraderList();
 		for (TradingBroker t : traderList.getList()) {
