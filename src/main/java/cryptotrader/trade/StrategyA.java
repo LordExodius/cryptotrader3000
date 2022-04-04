@@ -54,7 +54,7 @@ public class StrategyA extends TradingStrategy {
 
         double adaPrice = coinsIn.get("ADA").getPrice();
         if (coinsIn.get("BTC").getPrice() <= 50000 && adaPrice > 2) {
-            TradeResult res = new TradeResult(null, this, "ADA", "buy", 10, adaPrice);
+            TradeResult res = new TradeResult(null, this, "ADA", "buy", 10, Math.round(adaPrice*100.0)/100.0);
             return res;
         }
         return null;

@@ -57,7 +57,7 @@ public class StrategyB extends TradingStrategy {
         // Trading logic
         if (coinsIn.get("LTC").getPrice() >= 125 && coinsIn.get("ADA").getPrice() > 1.15) {
             TradeResult res = new TradeResult(null, this, "SOL", "buy", 20, 
-                    coinsIn.get("SOL").getPrice());
+                    Math.round(((coinsIn.get("SOL").getPrice())*100.0)/100.0));
             return res;
         }
 
