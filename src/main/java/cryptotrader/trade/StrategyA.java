@@ -3,8 +3,6 @@ package cryptotrader.trade;
 import cryptotrader.view.TradeResult;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Date;
-import java.text.SimpleDateFormat;
 
 /**
  * A subclass of Strategy
@@ -44,11 +42,12 @@ public class StrategyA extends TradingStrategy {
      * @return res
      */
     public TradeResult trade (HashMap<String, Coin> coinsIn) {
-        double adaPrice = coinsIn.get("ADA").getPrice();
-
         ArrayList<String> interestedCoins = new ArrayList<>(coinsIn.keySet());
+        if (!checkCoins(interestedCoins))
+            return new TradeResult(null, this, "ADA", "Fail", 0, 0);
 
-        if (checkCoins(interestedCoins) && coinsIn.get("BTC").getPrice() <= 50000 && adaPrice > 2) {
+        double adaPrice = coinsIn.get("ADA").getPrice();
+        if (coinsIn.get("BTC").getPrice() <= 50000 && adaPrice > 2) {
             TradeResult res = new TradeResult(null, this, "ADA", "buy", 10, adaPrice);
             return res;
         }

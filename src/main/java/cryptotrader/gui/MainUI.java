@@ -34,6 +34,9 @@ import cryptotrader.trade.TradingBroker;
 import cryptotrader.trade.TradingStrategy;
 import cryptotrader.user.User;
 import cryptotrader.utils.DataVisualizationCreator;
+import cryptotrader.view.TradeActivityGraph;
+import cryptotrader.view.TradeActivityTable;
+import cryptotrader.view.TradeLog;
 
 public class MainUI extends JFrame implements ActionListener {
 	/**
@@ -42,7 +45,9 @@ public class MainUI extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
 
 	private static MainUI instance;
-	private JPanel stats, chartPanel, tablePanel;
+	private JPanel stats;
+	private TradeActivityTable tradeTable;
+	private TradeActivityGraph tradeGraph;
 
 	// Should be a reference to a separate object in actual implementation
 	private List<String> selectedList;
@@ -129,6 +134,13 @@ public class MainUI extends JFrame implements ActionListener {
 
 		west.add(stats);
 
+		tradeTable = new TradeActivityTable();
+		tradeGraph = new TradeActivityGraph();
+
+		TradeLog tradeLog = User.getInstance().getTradeLog();
+		tradeLog.attach(tradeTable);
+		tradeLog.attach(tradeGraph);
+
 		getContentPane().add(north, BorderLayout.NORTH);
 		getContentPane().add(east, BorderLayout.EAST);
 		getContentPane().add(west, BorderLayout.CENTER);
@@ -183,14 +195,21 @@ public class MainUI extends JFrame implements ActionListener {
 					String strategyName = strategyObject.toString();
 					TradingStrategy strategy = new StrategyCreator().create(strategyName);
 					TradingBroker trader = traderList.getTrader(traderName);
+					if (trader == null) {
+						// trader doesn't exist: create it
+						trader = new TradingBroker(traderName);
+						traderList.addTrader(trader);
+					}
 					trader.setActive(true);
 					trader.updateCoins(new ArrayList<String>(Arrays.asList(coinNames)));
 					trader.updateStrategy(strategy);
-					user.performTrades();
 	        }
 			stats.removeAll();
-			DataVisualizationCreator creator = new DataVisualizationCreator();
-			creator.createCharts();
+			user.performTrades();
+			/**
+			 * DataVisualizationCreator creator = new DataVisualizationCreator();
+			 * creator.createCharts();
+			 */
 		} else if ("addTableRow".equals(command)) {
 			dtm.addRow(new String[3]);
 		} else if ("remTableRow".equals(command)) {

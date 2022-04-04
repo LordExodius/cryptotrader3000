@@ -90,6 +90,9 @@ public class TradeResult implements GetTradeInfo {
         this.timestamp = timestamp;
     }
     
+    public void setBroker(TradingBroker broker) {
+        this.broker = broker;
+    }
 
     @Override
     public TradingBroker getBroker() {
