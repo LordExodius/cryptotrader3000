@@ -54,32 +54,27 @@ public class User {
      * interested trading brokers in this user's trader list.
      * 
      */
-    public void performTrades() {
+    public void performTrades() throws CoinAPIException {
         ArrayList<String> coinNames = new ArrayList<String>(traderList.getInterestedCoins());
         HashMap<String, Coin> coinInfo;
         ArrayList<TradeResult> tradeResults = new ArrayList<TradeResult>();
-        try {
-            coinInfo = coinAPI.getData(coinNames);
-            MainUI.getInstance().removeAllStats();
-            // pass each trader the coins that they are interested in
-            for (TradingBroker trader : traderList.getList()) {
-                if (trader.getActive()) {
-                    // filter out the coins that this trader is interested in
-                    HashMap<String, Coin> interestedCoins = new HashMap<String, Coin>();
-                    for (String interestedCoinName : trader.getCoinList()) {
-                        interestedCoins.put(interestedCoinName, coinInfo.get(interestedCoinName));
-                    }
-                    // execute the trade for this trader
-                    TradeResult result = trader.executeTrade(interestedCoins);
-                    if (result != null)
-                        tradeResults.add(result);
+        coinInfo = coinAPI.getData(coinNames);
+        MainUI.getInstance().removeAllStats();
+        // pass each trader the coins that they are interested in
+        for (TradingBroker trader : traderList.getList()) {
+            if (trader.getActive()) {
+                // filter out the coins that this trader is interested in
+                HashMap<String, Coin> interestedCoins = new HashMap<String, Coin>();
+                for (String interestedCoinName : trader.getCoinList()) {
+                    interestedCoins.put(interestedCoinName, coinInfo.get(interestedCoinName));
                 }
+                // execute the trade for this trader
+                TradeResult result = trader.executeTrade(interestedCoins);
+                if (result != null)
+                    tradeResults.add(result);
             }
-            tradeLog.addResults(tradeResults);
-        } catch (CoinAPIException e) {
-            System.out.println(e.getMessage());
-            return;
         }
+        tradeLog.addResults(tradeResults);
         return;
     }
 

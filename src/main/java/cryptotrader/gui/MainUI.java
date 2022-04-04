@@ -24,6 +24,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
+import cryptotrader.trade.CoinAPIException;
 import cryptotrader.trade.StrategyCreator;
 import cryptotrader.trade.TraderList;
 import cryptotrader.trade.TradingBroker;
@@ -203,7 +204,11 @@ public class MainUI extends JFrame implements ActionListener {
 					trader.updateStrategy(strategy);
 					traderList.addTrader(trader);
 	        }
-			user.performTrades();
+			try {
+				user.performTrades();
+			} catch (CoinAPIException err) {
+				new PopupUI(err.getMessage());
+			}
 			/**
 			 * DataVisualizationCreator creator = new DataVisualizationCreator();
 			 * creator.createCharts();

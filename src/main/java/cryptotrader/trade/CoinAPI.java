@@ -55,13 +55,14 @@ public class CoinAPI {
 			} else if (responseCode == 429) {
 				// exceeded API calls
 				throw new CoinAPIException(
-					"CoinGecko API has been accessed too many times in the last minute. Please wait.");
+					"The CoinGecko API has been accessed too many times in the last minute. Please wait.");
 			} else {
 				throw new CoinAPIException("There was an error calling the CoinGecko API: Status code "
 					+ responseCode);
 			}
 		} catch (IOException e) {
-			throw new CoinAPIException(e.getMessage());
+			throw new CoinAPIException(
+				"The CoinGecko API has been accessed too many times in the last minute. Please wait.");
 		}
 	}
 	
