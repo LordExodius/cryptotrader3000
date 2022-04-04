@@ -69,7 +69,8 @@ public class User {
                     }
                     // execute the trade for this trader
                     TradeResult result = trader.executeTrade(interestedCoins);
-                    tradeResults.add(result);
+                    if (result != null)
+                        tradeResults.add(result);
                 }
             }
             tradeLog.addResults(tradeResults);
