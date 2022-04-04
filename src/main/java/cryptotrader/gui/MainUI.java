@@ -124,7 +124,6 @@ public class MainUI extends JFrame implements ActionListener {
 		south.add(trade);
 
 		dtm = new DefaultTableModel(new Object[] { "Trading Client", "Coin List", "Strategy Name" }, 1);
-		table = new JTable(dtm);
 		// table.setPreferredSize(new Dimension(600, 300));
 		JScrollPane scrollPane = new JScrollPane(table);
 		scrollPane.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "Trading Client Actions",
@@ -146,7 +145,6 @@ public class MainUI extends JFrame implements ActionListener {
 		remRow.addActionListener(this);
 
 		scrollPane.setPreferredSize(new Dimension(800, 300));
-		table.setFillsViewportHeight(true);
 		
 
 		JPanel east = new JPanel();
@@ -173,9 +171,22 @@ public class MainUI extends JFrame implements ActionListener {
 		tradeTable = new TradeActivityTable();
 		tradeGraph = new TradeActivityGraph();
 
-		TradeLog tradeLog = User.getInstance().getTradeLog();
+		User user = User.getInstance();
+		TradeLog tradeLog = user.getTradeLog();
 		tradeLog.attach(tradeTable);
 		tradeLog.attach(tradeGraph);
+
+		TraderList traderList = user.getTraderList();
+		for (TradingBroker t : traderList.getList()) {
+			Object[] row = {
+				t.getName(),
+				String.join(",", t.getCoinList()),
+				t.getStrategy().getName(),
+			};
+			dtm.addRow(row);
+		}
+		table.setFillsViewportHeight(true);
+		table = new JTable(dtm);
 
 		getContentPane().add(north, BorderLayout.NORTH);
 		getContentPane().add(east, BorderLayout.EAST);
