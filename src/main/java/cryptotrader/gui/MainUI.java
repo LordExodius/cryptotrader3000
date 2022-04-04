@@ -129,7 +129,7 @@ public class MainUI extends JFrame implements ActionListener {
 
 		// Set charts region
 		JPanel west = new JPanel();
-		west.setPreferredSize(new Dimension(1250, 650));
+		west.setPreferredSize(new Dimension(800, 650));
 		stats = new JPanel();
 		stats.setLayout(new GridLayout(2, 2));
 
