@@ -148,8 +148,10 @@ public class CoinAPI {
 				name = "litecoin";
 			} else if (coin == "ADA") {
 				name = "cardano";
-			} else {
+			} else if (coin == "SOL") {
 				name = "solana";
+			} else {
+				continue;
 			}
 
 			double price = this.getPriceForCoin(name, date);
