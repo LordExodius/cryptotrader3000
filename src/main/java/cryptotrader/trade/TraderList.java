@@ -229,5 +229,19 @@ public class TraderList implements UpdateTraderList {
             System.out.println("Test 5 failed");
         }
     }
+    /**
+     * Get a trader by its ID. If a trader with the specified ID does not exist,
+     * returns null.
+     * 
+     * @param id the ID of the trader to retrieve
+     */
+    public TradingBroker getTrader(int id) {
+        for (TradingBroker trader : traderList) {
+            if (trader.getID() == id) {
+                return trader;
+            }
+        }
+        return null;
+    }
     
 }

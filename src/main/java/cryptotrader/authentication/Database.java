@@ -12,6 +12,7 @@ import java.util.Base64;
 import cryptotrader.trade.StrategyCreator;
 import cryptotrader.trade.TraderList;
 import cryptotrader.trade.TradingBroker;
+import cryptotrader.trade.TradingStrategy;
 import cryptotrader.user.User;
 import cryptotrader.view.TradeLog;
 import cryptotrader.view.TradeResult;
@@ -161,6 +162,8 @@ public class Database implements DatabaseAuthenticate, GetFromDatabase, AddToDat
         }
     }
 
+
+
     @Override
     public TraderList getTraders() {
         TraderList list = new TraderList();
@@ -190,9 +193,44 @@ public class Database implements DatabaseAuthenticate, GetFromDatabase, AddToDat
         return null;
     }
 
+    /**
+     * Get the list of trade results stored in the database for the current user and
+     * re-constructs a trade log.
+     * 
+     * @param traderList a TraderList with which brokers in the TradeLog will be matched to
+     */
     @Override
-    public TradeLog getTradeLog() {
-        TradeLog log = new TradeLog();
+    public TradeLog getTradeLog(TraderList traderList) {
+        String get = "SELECT * from results WHERE user = " + User.getInstance().getUsername();
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet results = statement.executeQuery(get);
+            StrategyCreator creator = new StrategyCreator();
+            ArrayList<TradeResult> tradeResults = new ArrayList<TradeResult>();
+            while (results.next()) {
+                // get the trader from the trader list with the specified broker ID
+                TradingBroker trader = traderList.getTrader(results.getInt("brokerID"));
+                // create a new strategy object according to the strategy name of this result
+                TradingStrategy strategy = creator.create(results.getString("strategy"));
+                // create the trade result to be appended to the trade log
+                TradeResult tradeResult = new TradeResult(
+                    trader,
+                    strategy,
+                    results.getString("coinName"),
+                    results.getString("action"),
+                    results.getInt("quantity"),
+                    results.getDouble("price"),
+                    results.getString("date")
+                );
+                tradeResults.add(tradeResult);
+            }
+            TradeLog tradeLog = new TradeLog();
+            tradeLog.addResults(tradeResults);
+            return tradeLog;
+        } catch (SQLException e) {
+            System.out.println("An SQL error has occured while retrieving trade log data:");
+            System.out.println(e);
+        }
         return null;
     }
 

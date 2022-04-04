@@ -85,13 +85,9 @@ public class TradingBroker implements UpdateBroker, ExecuteTrade {
     }
 
     @Override
-    /**
-     * Calls the strategy's trade method
-     * @return TradeResult
-     */
-    public TradeResult executeTrade(HashMap<String, Coin> interestedCoins) {
-        return strategy.trade(interestedCoins);
-        
+    public TradeResult executeTrade(HashMap<String, Coin> coinInfo) {
+        // TODO Auto-generated method stub
+        return null;
     }
 
     @Override

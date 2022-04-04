@@ -48,12 +48,8 @@ public class StrategyA extends TradingStrategy {
 
         ArrayList<String> interestedCoins = new ArrayList<>(coinsIn.keySet());
 
-        // Get current date
-        Date date = new Date();
-        SimpleDateFormat formatter = new SimpleDateFormat();
-
         if (checkCoins(interestedCoins) && coinsIn.get("BTC").getPrice() <= 50000 && adaPrice > 2) {
-            TradeResult res = new TradeResult(null, this, "ADA", "buy", 10, adaPrice, formatter.format(date));
+            TradeResult res = new TradeResult(null, this, "ADA", "buy", 10, adaPrice);
             return res;
         }
         
