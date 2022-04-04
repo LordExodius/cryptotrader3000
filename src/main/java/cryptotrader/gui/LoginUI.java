@@ -1,8 +1,6 @@
 package cryptotrader.gui;
 
 import cryptotrader.authentication.Database;
-import cryptotrader.gui.MainUI;
-import cryptotrader.trade.TraderList;
 import cryptotrader.user.User;
 
 import javax.swing.BorderFactory;
