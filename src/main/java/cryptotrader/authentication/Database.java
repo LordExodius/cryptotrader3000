@@ -18,13 +18,12 @@ import cryptotrader.view.TradeLog;
 import cryptotrader.view.TradeResult;
 
 /**
- * A class that connects to and performs queries on the project database
+ * A class that connects to and performs queries on the project database.
+ * Implements the singleton pattern as only one database should be active at any time.
  * @author Oscar Yu, David Tran
  * @version 1.0
  */
 public class Database implements DatabaseAuthenticate, GetFromDatabase, AddToDatabase {
-    // TODO: DELETE EXISTING USER ENTRIES BEFORE SAVING
-
     /**
      * Databse contains 3 tables:
      * - creds(user text, pass text)
@@ -32,21 +31,20 @@ public class Database implements DatabaseAuthenticate, GetFromDatabase, AddToDat
      * - results(user text, name text, strategy text, coinName text, action text, quantity int, price real, date text)
      */
 
+    // the singleton instance
     private static Database instance = new Database();
+    // the SQL connection to the database
     private Connection connection;
 
-    // Constructor for Database class
-    private Database()
-    {
-        try 
-        {
+    /**
+     * Default construct the database by initializing the SQL connection.
+     */
+    private Database() {
+        try {
             // create connection to database file
             connection = DriverManager.getConnection("jdbc:sqlite:./db/auth.db");
-        }
-            
-        // handle SQL exception when creating connection to database file
-        catch(SQLException e) 
-        {
+        } catch(SQLException e) {
+            // handle SQL exception when creating connection to database file
             System.out.println("An SQLException has occurred. Error message:");
             System.out.println(e);
         }
@@ -371,9 +369,7 @@ public class Database implements DatabaseAuthenticate, GetFromDatabase, AddToDat
         }
     }
 
-    /**
-     * Run test cases for database authentication.
-     */
+    // run test cases for database authentication
     public static void main(String args[])
     {
         // true
