@@ -183,8 +183,6 @@ public class Database implements DatabaseAuthenticate, GetFromDatabase, AddToDat
         }
     }
 
-
-
     @Override
     public TraderList getTraders() {
         TraderList list = new TraderList();
@@ -199,7 +197,8 @@ public class Database implements DatabaseAuthenticate, GetFromDatabase, AddToDat
             while(results.next())
             {
                 tempBroker = new TradingBroker(results.getString("name"));
-                tempBroker.updateStrategy(creator.create(results.getString("strategy")));
+                String strategy = results.getString("strategy");
+                tempBroker.updateStrategy(creator.create(strategy));
                 tempBroker.setNumTrades(results.getInt("numTrades"));
                 tempBroker.updateCoins(new ArrayList<String>(Arrays.asList(results.getString("coinList").split(",", 0))));
                 tempBroker.setActive(Boolean.valueOf(results.getString("active")));
