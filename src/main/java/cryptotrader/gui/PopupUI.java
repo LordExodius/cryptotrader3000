@@ -20,6 +20,7 @@ public class PopupUI extends JFrame implements ActionListener{
     JFrame popupFrame;
     JPanel popupPanel;
 
+    // Constuctor for PopupUI
     public PopupUI(String message)
     {
         popupFrame = new JFrame();

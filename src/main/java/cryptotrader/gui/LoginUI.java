@@ -110,6 +110,9 @@ public class LoginUI extends JFrame implements ActionListener {
         }   
     }
 
+    /**
+     * Initializes User instance with authenticated username and associated records.
+     */
     private void initUser()
     {
         User user = User.getInstance();
@@ -119,6 +122,9 @@ public class LoginUI extends JFrame implements ActionListener {
         initMain();
     }
 
+    /**
+     * Initializes MainUI instance with listeners to save trading history and broker objects on close.
+     */
     private void initMain()
     {
         JFrame mainFrame = MainUI.getInstance();
