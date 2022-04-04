@@ -128,12 +128,8 @@ public class LoginUI extends JFrame implements ActionListener {
             public void windowClosing(WindowEvent e) {
                 database.addTraders(User.getInstance().getTraderList());
                 database.addTradeLog(User.getInstance().getTradeLog());
-            }
-            
-            // When MainUI is closed, close the loginFrame as well
-            @Override
-            public void windowClosed(WindowEvent e) {
-            loginFrame.dispatchEvent(new WindowEvent(loginFrame, WindowEvent.WINDOW_CLOSING));
+                System.out.println("Successfully saved user data.");
+                loginFrame.dispatchEvent(new WindowEvent(loginFrame, WindowEvent.WINDOW_CLOSING));
             }
         });
     }

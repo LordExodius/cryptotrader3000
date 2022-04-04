@@ -171,11 +171,12 @@ public class Database implements DatabaseAuthenticate, GetFromDatabase, AddToDat
     @Override
     public TraderList getTraders() {
         TraderList list = new TraderList();
-        String get = "SELECT * from brokers WHERE user = " + User.getInstance().getUsername();
+        String get = "SELECT * from brokers WHERE user = ?";
         try
         {
-            Statement statement = connection.createStatement();
-            ResultSet results = statement.executeQuery(get);
+            PreparedStatement statement = connection.prepareStatement(get);
+            statement.setString(1, User.getInstance().getUsername());
+            ResultSet results = statement.executeQuery();
             TradingBroker tempBroker;
             StrategyCreator creator = new StrategyCreator();
             while(results.next())
@@ -187,6 +188,7 @@ public class Database implements DatabaseAuthenticate, GetFromDatabase, AddToDat
                 tempBroker.setActive(Boolean.valueOf(results.getString("active")));
                 list.addTrader(tempBroker);
             }
+            System.out.println("Successfully retrieved trading broker data.");
             return list;
         }
         catch(SQLException e)
@@ -205,11 +207,12 @@ public class Database implements DatabaseAuthenticate, GetFromDatabase, AddToDat
      */
     @Override
     public TradeLog getTradeLog(TraderList traderList) {
-        String get = "SELECT * from results WHERE user = " + User.getInstance().getUsername();
+        String get = "SELECT * from results WHERE user = ?";
         TradeLog tradeLog = new TradeLog();
         try {
-            Statement statement = connection.createStatement();
-            ResultSet results = statement.executeQuery(get);
+            PreparedStatement statement = connection.prepareStatement(get);
+            statement.setString(1, User.getInstance().getUsername());
+            ResultSet results = statement.executeQuery();
             StrategyCreator creator = new StrategyCreator();
             ArrayList<TradeResult> tradeResults = new ArrayList<TradeResult>();
             while (results.next()) {
@@ -230,6 +233,7 @@ public class Database implements DatabaseAuthenticate, GetFromDatabase, AddToDat
                 tradeResults.add(tradeResult);
             }
             tradeLog.addResults(tradeResults);
+            System.out.println("Successfully retrieved trade log data.");
             return tradeLog;
         } catch (SQLException e) {
             System.out.println("An SQL error has occured while retrieving trade log data:");
