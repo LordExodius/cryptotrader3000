@@ -3,6 +3,8 @@ package cryptotrader.trade;
 import cryptotrader.view.TradeResult;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Date;
+import java.text.SimpleDateFormat;
 
 public class StrategyA extends TradingStrategy {
     
