@@ -114,6 +114,8 @@ public class Database implements DatabaseAuthenticate, GetFromDatabase, AddToDat
 
     @Override
     public void addTraders(TraderList traders) {
+        if(traders == null)
+            return;
         String add = "INSERT INTO brokers(user, name, numTrades, coinList, strategy, active) VALUES(?, ?, ?, ?, ?, ?)";
         for(TradingBroker trader : traders.getList())
         {
@@ -138,6 +140,8 @@ public class Database implements DatabaseAuthenticate, GetFromDatabase, AddToDat
 
     @Override
     public void addTradeLog(TradeLog log) {
+        if(log == null)
+            return;
         String add = "INSERT INTO results(user, name, strategy, coinName, action, quantity, price, date) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
         for(TradeResult result : log.getResults())
         {
@@ -190,7 +194,7 @@ public class Database implements DatabaseAuthenticate, GetFromDatabase, AddToDat
             System.out.println("An SQL error has occured while storing retrieving broker data:");
             System.out.println(e);
         }
-        return null;
+        return list;
     }
 
     /**
@@ -202,6 +206,7 @@ public class Database implements DatabaseAuthenticate, GetFromDatabase, AddToDat
     @Override
     public TradeLog getTradeLog(TraderList traderList) {
         String get = "SELECT * from results WHERE user = " + User.getInstance().getUsername();
+        TradeLog tradeLog = new TradeLog();
         try {
             Statement statement = connection.createStatement();
             ResultSet results = statement.executeQuery(get);
@@ -224,14 +229,13 @@ public class Database implements DatabaseAuthenticate, GetFromDatabase, AddToDat
                 );
                 tradeResults.add(tradeResult);
             }
-            TradeLog tradeLog = new TradeLog();
             tradeLog.addResults(tradeResults);
             return tradeLog;
         } catch (SQLException e) {
             System.out.println("An SQL error has occured while retrieving trade log data:");
             System.out.println(e);
         }
-        return null;
+        return tradeLog;
     }
 
     // ----------------------------------------------------------------------------------
