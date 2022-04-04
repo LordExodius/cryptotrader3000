@@ -117,6 +117,21 @@ public class TraderList implements UpdateTraderList {
         return interestedCoins;
     }
 
+    /**
+     * Get a trader by its ID. If a trader with the specified ID does not exist,
+     * returns null.
+     * 
+     * @param brokerName the name of the trading broker
+     */
+    public TradingBroker getTrader(String brokerName) {
+        for (TradingBroker trader : traderList) {
+            if (trader.getName().equals(brokerName)) {
+                return trader;
+            }
+        }
+        return null;
+    }
+
     public static void main(String[] args) {
         Coin btc = new Coin("BTC", 23.45, 2413.345, 2345.6);
         Coin eth = new Coin("ETH", 23.45, 2413.345, 2345.6);
@@ -200,7 +215,7 @@ public class TraderList implements UpdateTraderList {
         }
 
         // Test 4
-        if (traders.updateCoins("2", new ArrayList(Arrays.asList("poop")))) {
+        if (traders.updateCoins("2", new ArrayList<String>(Arrays.asList("sdjkl")))) {
             System.out.println("Test 4 passed");
         } else {
             System.out.println("Test 4 failed");
@@ -214,19 +229,6 @@ public class TraderList implements UpdateTraderList {
         }
     }
 
-    /**
-     * Get a trader by its ID. If a trader with the specified ID does not exist,
-     * returns null.
-     * 
-     * @param brokerName the name of the trading broker
-     */
-    public TradingBroker getTrader(String brokerName) {
-        for (TradingBroker trader : traderList) {
-            if (trader.getName().equals(brokerName)) {
-                return trader;
-            }
-        }
-        return null;
-    }
+    
     
 }

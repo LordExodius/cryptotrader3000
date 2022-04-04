@@ -59,7 +59,7 @@ public class StrategyC extends TradingStrategy {
         if (coinsIn.get("ETH").getPrice() > 3450
                 && coinsIn.get("BTC").getPrice() > 46000) {
             TradeResult res = new TradeResult(null, this, "ADA", "sell", 100,
-                    coinsIn.get("ADA").getPrice());
+                    Math.round((coinsIn.get("ADA").getPrice())*100.0)/100.0);
             return res;
         }
 

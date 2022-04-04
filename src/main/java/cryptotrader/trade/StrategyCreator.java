@@ -9,6 +9,12 @@ package cryptotrader.trade;
 public class StrategyCreator implements Create {
 
     @Override
+    /**
+     * A method that chooses between creating one of strategy A, B, C, or D, based upon the parameter 
+     * passed
+     * @param strategySelection
+     * @return Strategy object
+     */
     public TradingStrategy create(String strategySelection) {
         if (strategySelection.equals("Strategy-A"))
             return new StrategyA();
@@ -18,7 +24,6 @@ public class StrategyCreator implements Create {
             return new StrategyC();
         else if (strategySelection.equals("Strategy-D"))
             return new StrategyD();
-        
         else 
             return null;
     }
