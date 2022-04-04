@@ -75,7 +75,9 @@ public class TradingBroker implements UpdateBroker, ExecuteTrade {
      */
     public TradeResult executeTrade(HashMap<String, Coin> coinInfo) {
         if (strategy != null) {
-            return strategy.trade(coinInfo);
+            TradeResult result = strategy.trade(coinInfo);
+            result.setBroker(this);
+            return result;
         } else {
             return null;
         }

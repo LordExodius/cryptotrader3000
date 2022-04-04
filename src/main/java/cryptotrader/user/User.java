@@ -72,6 +72,7 @@ public class User {
                     tradeResults.add(result);
                 }
             }
+            tradeLog.addResults(tradeResults);
         } catch (CoinAPIException e) {
             System.out.println(e.getMessage());
             // TODO: How should we handle an error to the API call (e.g. because of timeout)
