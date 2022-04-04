@@ -6,6 +6,9 @@ import java.util.ArrayList;
  * Subject class under the Observer pattern to be extended by the
  * TradeLog class. The Observer pattern is used for the model view
  * controller architectural style.
+ * 
+ * @author Ben Asokanthan
+ * @version 1.0
  */
 public abstract class Subject implements ModifyObservers {
 

@@ -198,11 +198,11 @@ public class MainUI extends JFrame implements ActionListener {
 					if (trader == null) {
 						// trader doesn't exist: create it
 						trader = new TradingBroker(traderName);
-						traderList.addTrader(trader);
 					}
 					trader.setActive(true);
 					trader.updateCoins(new ArrayList<String>(Arrays.asList(coinNames)));
 					trader.updateStrategy(strategy);
+					traderList.addTrader(trader);
 	        }
 			stats.removeAll();
 			user.performTrades();

@@ -46,9 +46,11 @@ public class StrategyC extends TradingStrategy {
      */
     public TradeResult trade(HashMap<String, Coin> coinsIn) {
         ArrayList<String> interestedCoins = new ArrayList<>(coinsIn.keySet());
+        if (!checkCoins(interestedCoins))
+            return new TradeResult(null, this, "ADA", "Fail", 0, 0);
 
         // Trading logic
-        if (checkCoins(interestedCoins) && coinsIn.get("ETH").getPrice() > 3450
+        if (coinsIn.get("ETH").getPrice() > 3450
                 && coinsIn.get("BTC").getPrice() > 46000) {
             TradeResult res = new TradeResult(null, this, "ADA", "sell", 100,
                     coinsIn.get("ADA").getPrice());

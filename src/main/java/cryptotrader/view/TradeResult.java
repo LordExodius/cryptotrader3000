@@ -6,6 +6,12 @@ import cryptotrader.trade.TradingStrategy;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Class that represents one trade result
+ * @author Ben Asokanthan
+ * @version 1.0
+ */
+
 public class TradeResult implements GetTradeInfo {
 
     /**
@@ -95,42 +101,64 @@ public class TradeResult implements GetTradeInfo {
     }
 
     @Override
+    /**
+     * Return broker
+     * @return broker
+     */
     public TradingBroker getBroker() {
-        // TODO Auto-generated method stub
         return this.broker;
     }
 
     @Override
+    /**
+     * Return trading strategy
+     * @return strategy
+     */
     public TradingStrategy getStrategy() {
-        // TODO Auto-generated method stub
         return this.strategy;
     }
 
     @Override
+    /**
+     * Return coin name
+     * @return coinName
+     */
     public String getCoinName() {
-        // TODO Auto-generated method stub
         return this.coinName;
     }
 
     @Override
+    /**
+     * Return action (buy or sell)
+     * @return action
+     */
     public String getActionType() {
-        // TODO Auto-generated method stub
         return this.action;
     }
 
     @Override
+    /**
+     * Return quantity of coin in trade
+     * @return quantity
+     */
     public int getQuantity() {
-        // TODO Auto-generated method stub
         return this.quantity;
     }
 
     @Override
+    /**
+     * Return price of coin
+     * @return price
+     */
     public double getPrice() {
-        // TODO Auto-generated method stub
         return this.price;
     }
 
     @Override
+    /**
+     * Return time of trade
+     * @return timestamp
+     */
     public String getTimestamp() {
         return timestamp;
     }

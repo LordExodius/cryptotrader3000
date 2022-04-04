@@ -69,13 +69,16 @@ public class TradingBroker implements UpdateBroker, ExecuteTrade {
 
     @Override
     /**
-     * Calls the strategy's trade method
+     * Calls the strategy's trade method. Returns null if no strategy exist
+     * or the strategy is not satisfied.
      * @param coinInfo
      * @return TradeResult 
      */
     public TradeResult executeTrade(HashMap<String, Coin> coinInfo) {
         if (strategy != null) {
             TradeResult result = strategy.trade(coinInfo);
+            if (result == null)
+                return null;
             result.setBroker(this);
             return result;
         } else {

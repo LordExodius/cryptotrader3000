@@ -47,12 +47,11 @@ public class StrategyD extends TradingStrategy {
     public TradeResult trade(HashMap<String, Coin> coinsIn) {
         ArrayList<String> interestedCoins = new ArrayList<>(coinsIn.keySet());
 
-        // Get current date
-        Date date = new Date();
-        SimpleDateFormat formatter = new SimpleDateFormat();
+        if (!checkCoins(interestedCoins))
+            return new TradeResult(null, this, "SOL", "Fail", 0, 0);
 
         // Trading logic
-        if (checkCoins(interestedCoins) && coinsIn.get("LTC").getPrice() >= 123) {
+        if (coinsIn.get("LTC").getPrice() >= 123) {
             TradeResult res = new TradeResult(null, this, "SOL", "sell", 234,
                     coinsIn.get("SOL").getPrice());
             return res;

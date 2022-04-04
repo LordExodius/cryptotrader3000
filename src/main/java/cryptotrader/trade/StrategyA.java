@@ -51,7 +51,6 @@ public class StrategyA extends TradingStrategy {
             TradeResult res = new TradeResult(null, this, "ADA", "buy", 10, adaPrice);
             return res;
         }
-        
         return null;
     }
 

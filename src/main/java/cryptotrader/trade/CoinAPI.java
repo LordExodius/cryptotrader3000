@@ -138,9 +138,33 @@ public class CoinAPI {
 
 		// For each coin, get the relevant info, and create a Coin object. Add this Coin to the coin list
 		for (String coin: dataIn) {
-			double price = this.getPriceForCoin(coin, date);
-			double marketCap = this.getMarketCapForCoin(coin, date);
-			double volume = this.getVolumeForCoin(coin, date);
+	
+			String name;
+			// convert ticker into name
+			switch (coin) {
+				case "BTC":
+					name = "bitcoin";
+					break;
+				case "ETH":
+					name = "ethereum";
+					break;
+				case "LTC":
+					name = "litecoin";
+					break;
+				case "ADA":
+					name = "cardano";
+					break;
+				case "SOL":
+					name = "solana";
+					break;
+				default:
+					// ignore this coin if not supported
+					continue;
+			}
+
+			double price = this.getPriceForCoin(name, date);
+			double marketCap = this.getMarketCapForCoin(name, date);
+			double volume = this.getVolumeForCoin(name, date);
 
 			Coin newCoin = new Coin(coin, price, marketCap, volume);
 			coinInfo.put(coin, newCoin);
