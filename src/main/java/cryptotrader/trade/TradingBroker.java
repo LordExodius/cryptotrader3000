@@ -2,11 +2,6 @@ package cryptotrader.trade;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-<<<<<<< HEAD
-=======
-
-import com.google.gson.JsonObject;
->>>>>>> 8947127275bb33703e96dd6cdcdd4e83e4253c0a
 
 import cryptotrader.view.TradeResult;
 
