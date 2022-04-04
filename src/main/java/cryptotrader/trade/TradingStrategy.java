@@ -5,6 +5,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
+/**
+ * An abstract class that represents an abstract trading strategy
+ * @author Jackson Howe, David Tran
+ * @version 1.0
+ */
 
 public abstract class TradingStrategy implements Trade {
 
