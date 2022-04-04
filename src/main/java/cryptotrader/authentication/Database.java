@@ -371,10 +371,23 @@ public class Database implements DatabaseAuthenticate, GetFromDatabase, AddToDat
         }
     }
 
+    /**
+     * Run test cases for database authentication.
+     */
     public static void main(String args[])
     {
-        Database.getInstance().addUser("oscar", "notpassword");
-        // Database.getInstance().clearCreds();
-        Database.getInstance().showCreds();
+        // true
+        System.out.println(Database.getInstance().authenticate("admin", "password"));
+        // false
+        System.out.println(Database.getInstance().authenticate("notadmin", "password"));
+        // false
+        System.out.println(Database.getInstance().authenticate("admin", "notpassword"));
+        // false
+        System.out.println(Database.getInstance().authenticate("notadmin", "notpassword"));
+        // false
+        System.out.println(Database.getInstance().authenticate("AND", "WHERE"));
+        // true
+        System.out.println(Database.getInstance().authenticate("oscar", "notpassword"));
+
     }
 }
