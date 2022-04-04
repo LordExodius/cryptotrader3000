@@ -7,9 +7,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Vector;
 
 import javax.swing.BorderFactory;
@@ -23,7 +20,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextArea;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
@@ -48,18 +44,6 @@ public class MainUI extends JFrame implements ActionListener {
 	private TradeActivityTable tradeTable;
 	private TradeActivityGraph tradeGraph;
 
-	// Should be a reference to a separate object in actual implementation
-	private List<String> selectedList;
-
-	private JTextArea selectedTickerList;
-//	private JTextArea tickerList;
-	private JTextArea tickerText;
-	private JTextArea BrokerText;
-	private JComboBox<String> strategyList;
-	private Map<String, List<String>> brokersTickers = new HashMap<>();
-	private Map<String, String> brokersStrategies = new HashMap<>();
-	private List<String> selectedTickers = new ArrayList<>();
-	private String selectedStrategy = "";
 	private DefaultTableModel dtm;
 	private JTable table;
 
@@ -211,9 +195,8 @@ public class MainUI extends JFrame implements ActionListener {
 					}
 					if (trader.getActive() == true)
 					{
-						// TODO: POPUP
-						new PopupUI("A trader with the name \"" + trader.getName() + "\" already exists. Please remove the duplicate and try again.");
-						break;
+						new PopupUI("A trader with the name \"" + trader.getName() + "\" already exists.");
+						continue;
 					}
 					trader.setActive(true);
 					trader.updateCoins(new ArrayList<String>(Arrays.asList(coinNames)));
