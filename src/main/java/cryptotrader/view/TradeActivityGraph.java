@@ -36,6 +36,9 @@ import cryptotrader.trade.TradingBroker;
 /**
  * Observer class which represents the bar graph on the UI. Acts as one of the views 
  * in the MVC, which updates whenever any TradeResults are added to the TradeLog.
+ * 
+ * @author Ben Asokanthan
+ * @version 1.0
  */
 public class TradeActivityGraph implements Observer {
     

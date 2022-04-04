@@ -6,6 +6,12 @@ import cryptotrader.trade.TradingStrategy;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Class that represents one trade result
+ * @author Ben Asokanthan
+ * @version 1.0
+ */
+
 public class TradeResult implements GetTradeInfo {
 
     /**
@@ -93,7 +99,6 @@ public class TradeResult implements GetTradeInfo {
 
     @Override
     public TradingBroker getBroker() {
-        // TODO Auto-generated method stub
         return this.broker;
     }
 

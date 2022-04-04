@@ -4,6 +4,9 @@ import java.util.ArrayList;
 
 /**
  * Class acts as the model or the subject for the past trades to be observered by the observers/views.
+ * 
+ * @author Ben Asokanthan
+ * @version 1.0
  */
 public class TradeLog extends Subject implements UpdateTradeLog {
 
@@ -12,12 +15,18 @@ public class TradeLog extends Subject implements UpdateTradeLog {
      */
     private ArrayList<TradeResult> entries;
 
+    /**
+     * Constructor
+     */
     public TradeLog() {
-        this.entries = new ArrayList();
+        this.entries = new ArrayList<TradeResult>();
     }
 
+    /**
+     * Add trade results to all observers (UI elements)
+     * @param tradeResults
+     */
     public void addResults(ArrayList<TradeResult> tradeResults) {
-        // TODO Auto-generated method stub
         entries.addAll(tradeResults);
         notifyObservers();
     }

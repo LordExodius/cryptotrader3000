@@ -35,6 +35,9 @@ import cryptotrader.gui.MainUI;
 /**
  * Observer class which represents the trade activity table on the UI. Acts as one of the views 
  * in the MVC, which updates whenever any TradeResults are added to the TradeLog.
+ * 
+ * @author Ben Asokanthan
+ * @version 1.0
  */
 public class TradeActivityTable implements Observer {
 
