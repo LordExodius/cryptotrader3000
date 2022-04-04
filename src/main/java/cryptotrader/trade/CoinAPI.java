@@ -23,48 +23,29 @@ import java.util.HashMap;
  */
 
 public class CoinAPI {
-
-	ArrayDeque<Long> cache;
-	long base;
-	public CoinAPI() {
-		cache = new ArrayDeque<Long>(50);
-		long timeMillis = System.currentTimeMillis();
-		base = TimeUnit.MILLISECONDS.toSeconds(timeMillis);
-		for (int i = 0; i < 50; i++) {
-			cache.addFirst(base);
-		}
-	}
-
 	/**
-	 * A method that makes sure the CoinGecko API isn't called more than 50 times in a minute
+	 * Make a GET request from the CoinGecko API. Returns the information for the coin
+	 * specified in `ID` at the date specified in `date`
+	 * 
+	 * @param id the CoinGecko id for a cryptocoin (e.g. bitcoin, solana, etc.)
+	 * @param date the date of the info that should be retrieved
+	 * @return A JsonObject containing the coin info as described here 
+	 * 		   https://www.coingecko.com/en/api/documentation
 	 * @throws CoinAPIException
 	 */
-	private void failSafe () throws CoinAPIException {
-		long millis = System.currentTimeMillis();
-		long currentTime = TimeUnit.MILLISECONDS.toSeconds(millis);
-		long marker = cache.removeFirst();
-
-		if (currentTime - marker < 60 && base != marker) {
-			throw new CoinAPIException("CoinGecko API has been accessed too many times in the last minute. Please wait.");
-		}
-
-		cache.addLast(currentTime);
-	}
-
-	private JsonObject getDataForCrypto(String id, String date) throws CoinAPIException {
-
-		this.failSafe();
-
-		String urlString = String.format(
-				"https://api.coingecko.com/api/v3/coins/%s/history?date=%s", id, date);
-		
+	private JsonObject getDataForCrypto(String id, String date) throws CoinAPIException {		
 		try {
+			// make the GET request to the API
+			String urlString = String.format(
+					"https://api.coingecko.com/api/v3/coins/%s/history?date=%s", id, date);
 			URL url = new URL(urlString);
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			conn.setRequestMethod("GET");
 			conn.connect();
-			int responsecode = conn.getResponseCode();
-			if (responsecode == 200) {
+			int responseCode = conn.getResponseCode();
+			if (responseCode == 200) {
+				// success
+				// parse the response data
 				String inline = "";
 				Scanner sc = new Scanner(url.openStream());
 				while (sc.hasNext()) {
@@ -73,14 +54,29 @@ public class CoinAPI {
 				sc.close();
 				JsonObject jsonObject = new JsonParser().parse(inline).getAsJsonObject();
 				return jsonObject;
+			} else if (responseCode == 429) {
+				// exceeded API calls
+				throw new CoinAPIException(
+					"CoinGecko API has been accessed too many times in the last minute. Please wait.");
+			} else {
+				throw new CoinAPIException("There was an error calling the CoinGecko API: Status code "
+					+ responseCode);
 			}
-
 		} catch (IOException e) {
-			System.out.println("Something went wrong with the API call.");
+			System.out.println("Error parsing the response object:");
+			System.err.println(e);
 		}
 		return null;
 	}
 	
+	/**
+	 * Get the price of coin with the specified ID at the time `date` in CAD.
+	 * 
+	 * @param id   the CoinGecko id for a cryptocoin (e.g. bitcoin, solana, etc.)
+	 * @param date the date of the info that should be retrieved
+	 * @return the price in CAD
+	 * @throws CoinAPIException
+	 */
 	public double getPriceForCoin(String id, String date) throws CoinAPIException {
 		double price = 0.0;
 		
@@ -94,6 +90,14 @@ public class CoinAPI {
 		return price;
 	}
 	
+	/**
+	 * Get the market cap of the coin with the specified ID at the time `date` in CAD.
+	 *
+	 * @param id   the CoinGecko id for a cryptocoin (e.g. bitcoin, solana, etc.)
+	 * @param date the date of the info that should be retrieved
+	 * @return the market cap in CAD
+	 * @throws CoinAPIException
+	 */
 	public double getMarketCapForCoin(String id, String date) throws CoinAPIException {
 		double marketCap = 0.0;
 		
@@ -107,6 +111,14 @@ public class CoinAPI {
 		return marketCap;
 	}
 	
+	/**
+	 * Get the trading volume of the coin with the specified ID at the time `date` in CAD.
+	 * 
+	 * @param id   the CoinGecko id for a cryptocoin (e.g. bitcoin, solana, etc.)
+	 * @param date the date of the info that should be retrieved
+	 * @return the trading volume in CAD.
+	 * @throws CoinAPIException
+	 */
 	public double getVolumeForCoin(String id, String date) throws CoinAPIException {
 		double volume = 0.0;
 		
@@ -159,6 +171,7 @@ public class CoinAPI {
 					break;
 				default:
 					// ignore this coin if not supported
+					System.err.println("Unsupported coin. Use BTC, ETH, LTC, ADA, or SOL");
 					continue;
 			}
 
@@ -179,11 +192,11 @@ public class CoinAPI {
 		CoinAPI test = new CoinAPI();
 		// Test 1
 		ArrayList<String> testIn = new ArrayList<String>() {{
-			add("bitcoin");
-			add("ethereum");
-			add("litecoin");
-			add("solana");
-			add("cardano");
+			add("BTC");
+			add("ETH");
+			add("LTC");
+			add("SOL");
+			add("ADA");
 		}};
 		// HashMap<String, Coin> test1 = test.getData(testIn);
 		// for (Coin coin : test1.values()) {
@@ -196,7 +209,7 @@ public class CoinAPI {
 				test.getData(testIn);
 				System.out.println("Call " + i + " passed");
 			} catch (CoinAPIException e) {
-				System.out.println("Call " +  " blocked");
+				System.out.println("Call " + i + " blocked");
 			}
 		}
 
