@@ -17,6 +17,11 @@ import cryptotrader.user.User;
 import cryptotrader.view.TradeLog;
 import cryptotrader.view.TradeResult;
 
+/**
+ * A class that connects to and performs queries on the project database
+ * @author Oscar Yu, David Tran
+ * @version 1.0
+ */
 public class Database implements DatabaseAuthenticate, GetFromDatabase, AddToDatabase {
     // TODO: DELETE EXISTING USER ENTRIES BEFORE SAVING
 
@@ -105,6 +110,10 @@ public class Database implements DatabaseAuthenticate, GetFromDatabase, AddToDat
         return false;
     }
 
+    /**
+     * Returns the active instance of Database, or creates it if not initialized.
+     * @return active instance of Database object
+     */
     public static Database getInstance()
     {
         if(instance == null)
@@ -112,8 +121,14 @@ public class Database implements DatabaseAuthenticate, GetFromDatabase, AddToDat
         return instance;
     }
 
+    /**
+     * Stores TradingBroker objects in the database
+     * @param traders a TraderList object containing all the TradingBroker objects associated with the current User instance
+     */
     @Override
     public void addTraders(TraderList traders) {
+        if(traders == null)
+            return;
         String add = "INSERT INTO brokers(user, name, numTrades, coinList, strategy, active) VALUES(?, ?, ?, ?, ?, ?)";
         for(TradingBroker trader : traders.getList())
         {
@@ -136,8 +151,14 @@ public class Database implements DatabaseAuthenticate, GetFromDatabase, AddToDat
         }
     }
 
+    /**
+     * Stores TradeResult objects in the database
+     * @param log a TradeLog object containing all TradeResult objects associated with current User instance
+     */
     @Override
     public void addTradeLog(TradeLog log) {
+        if(log == null)
+            return;
         String add = "INSERT INTO results(user, name, strategy, coinName, action, quantity, price, date) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
         for(TradeResult result : log.getResults())
         {
@@ -167,11 +188,12 @@ public class Database implements DatabaseAuthenticate, GetFromDatabase, AddToDat
     @Override
     public TraderList getTraders() {
         TraderList list = new TraderList();
-        String get = "SELECT * from brokers WHERE user = " + User.getInstance().getUsername();
+        String get = "SELECT * from brokers WHERE user = ?";
         try
         {
-            Statement statement = connection.createStatement();
-            ResultSet results = statement.executeQuery(get);
+            PreparedStatement statement = connection.prepareStatement(get);
+            statement.setString(1, User.getInstance().getUsername());
+            ResultSet results = statement.executeQuery();
             TradingBroker tempBroker;
             StrategyCreator creator = new StrategyCreator();
             while(results.next())
@@ -183,6 +205,14 @@ public class Database implements DatabaseAuthenticate, GetFromDatabase, AddToDat
                 tempBroker.setActive(Boolean.valueOf(results.getString("active")));
                 list.addTrader(tempBroker);
             }
+            System.out.println("Successfully retrieved trading broker data.");
+
+            // Remove all records associated with user to prevent duplication when saving next time
+            statement = connection.prepareStatement("DELETE FROM brokers WHERE user = ?");
+            statement.setString(1, User.getInstance().getUsername());
+            statement.executeUpdate();
+            System.out.println("Deleted user's broker data from database.");
+            
             return list;
         }
         catch(SQLException e)
@@ -190,7 +220,7 @@ public class Database implements DatabaseAuthenticate, GetFromDatabase, AddToDat
             System.out.println("An SQL error has occured while storing retrieving broker data:");
             System.out.println(e);
         }
-        return null;
+        return list;
     }
 
     /**
@@ -201,10 +231,12 @@ public class Database implements DatabaseAuthenticate, GetFromDatabase, AddToDat
      */
     @Override
     public TradeLog getTradeLog(TraderList traderList) {
-        String get = "SELECT * from results WHERE user = " + User.getInstance().getUsername();
+        String get = "SELECT * from results WHERE user = ?";
+        TradeLog tradeLog = new TradeLog();
         try {
-            Statement statement = connection.createStatement();
-            ResultSet results = statement.executeQuery(get);
+            PreparedStatement statement = connection.prepareStatement(get);
+            statement.setString(1, User.getInstance().getUsername());
+            ResultSet results = statement.executeQuery();
             StrategyCreator creator = new StrategyCreator();
             ArrayList<TradeResult> tradeResults = new ArrayList<TradeResult>();
             while (results.next()) {
@@ -224,14 +256,21 @@ public class Database implements DatabaseAuthenticate, GetFromDatabase, AddToDat
                 );
                 tradeResults.add(tradeResult);
             }
-            TradeLog tradeLog = new TradeLog();
             tradeLog.addResults(tradeResults);
+            System.out.println("Successfully retrieved trade log data.");
+            
+            // Remove all records associated with user to prevent duplication when saving next time
+            statement = connection.prepareStatement("DELETE FROM results WHERE user = ?");
+            statement.setString(1, User.getInstance().getUsername());
+            statement.executeUpdate();
+            System.out.println("Deleted user's trade results data from database.");
+
             return tradeLog;
         } catch (SQLException e) {
             System.out.println("An SQL error has occured while retrieving trade log data:");
             System.out.println(e);
         }
-        return null;
+        return tradeLog;
     }
 
     // ----------------------------------------------------------------------------------
