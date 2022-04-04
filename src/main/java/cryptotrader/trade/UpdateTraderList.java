@@ -1,9 +1,10 @@
 package cryptotrader.trade;
 
+import java.util.ArrayList;
+
 public interface UpdateTraderList {
     public boolean addTrader(TradingBroker newTrader);
-    public TradingBroker removeTrader(int brokerID);
-    public boolean updateName(int brokerID, String brokerName);
-    public boolean addCoin(int brokerID, String newCoin);
-    public boolean updateStrategy(int brokerID, TradingStrategy strategy);
+    public TradingBroker removeTrader(String brokerName);
+    public boolean updateCoins(String brokerName, ArrayList<String> newCoins);
+    public boolean updateStrategy(String brokerName, TradingStrategy strategy);
 }

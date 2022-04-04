@@ -3,6 +3,7 @@ package cryptotrader.trade;
 import cryptotrader.view.TradeResult;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -51,10 +52,10 @@ public class TraderList implements UpdateTraderList {
      * @param brokerID
      * @return removedTrader
      */
-    public TradingBroker removeTrader(int brokerID) {
+    public TradingBroker removeTrader(String brokerName) {
         TradingBroker removedTrader = null;
         for (TradingBroker trader : traderList) {
-            if (trader.getID() == brokerID)
+            if (trader.getName().equals(brokerName))
                 removedTrader = trader;
         }
         
@@ -67,32 +68,15 @@ public class TraderList implements UpdateTraderList {
 
     @Override
     /**
-     * Method that updates a trader in trader list's name
-     * @param brokerID
-     * @param brokerName
-     * @return boolean
-     */
-    public boolean updateName(int brokerID, String brokerName) {
-        for (TradingBroker trader : traderList) {
-            if (trader.getID() == brokerID) {
-                trader.updateName(brokerName);
-                return true;
-            }
-        }
-        return false;
-    }
-
-    @Override
-    /**
      * Method that adds a coin to a broker in the trader list
      * @param brokerID
      * @param newCoin
      * @return boolean
      */
-    public boolean addCoin(int brokerID, String newCoin) {
+    public boolean updateCoins(String brokerName, ArrayList<String> newCoins) {
         for (TradingBroker trader : traderList) {
-            if (trader.getID() == brokerID) {
-                trader.addCoin(newCoin);
+            if (trader.getName().equals(brokerName)) {
+                trader.updateCoins(newCoins);
                 return true;
             }
         }
@@ -106,9 +90,9 @@ public class TraderList implements UpdateTraderList {
      * @param strategy
      * @return boolean
      */
-    public boolean updateStrategy(int brokerID, TradingStrategy strategy) {
+    public boolean updateStrategy(String brokerName, TradingStrategy strategy) {
         for (TradingBroker trader : traderList) {
-            if (trader.getID() == brokerID) {
+            if (trader.getName().equals(brokerName)) {
                 trader.updateStrategy(strategy);;
                 return true;
             }
@@ -153,10 +137,10 @@ public class TraderList implements UpdateTraderList {
         TradingStrategy c = new StrategyC();
         TradingStrategy d = new StrategyD();
 
-        TradingBroker trader1 = new TradingBroker();
-        TradingBroker trader2 = new TradingBroker();
-        TradingBroker trader3 = new TradingBroker();
-        TradingBroker trader4 = new TradingBroker();
+        TradingBroker trader1 = new TradingBroker("John");
+        TradingBroker trader2 = new TradingBroker("2");
+        TradingBroker trader3 = new TradingBroker("3");
+        TradingBroker trader4 = new TradingBroker("4");
 
         trader1.updateStrategy(a);
         trader2.updateStrategy(b);
@@ -209,21 +193,21 @@ public class TraderList implements UpdateTraderList {
         trader1.updateName("John");
 
         // Test 3
-        if (traders.removeTrader(1).getName() == "John") {
+        if (traders.removeTrader("John").getName().equals("John")) {
             System.out.println("Test 3 passed");
         } else {
             System.out.println("Test 3 failed");
         }
 
         // Test 4
-        if (traders.addCoin(2, "poop")) {
+        if (traders.updateCoins("2", new ArrayList(Arrays.asList("poop")))) {
             System.out.println("Test 4 passed");
         } else {
             System.out.println("Test 4 failed");
         }
 
         // Test 5
-        if (traders.updateStrategy(3, d)) {
+        if (traders.updateStrategy("3", d)) {
             System.out.println("Test 5 passed");
         } else {
             System.out.println("Test 5 failed");
@@ -238,6 +222,21 @@ public class TraderList implements UpdateTraderList {
     public TradingBroker getTrader(int id) {
         for (TradingBroker trader : traderList) {
             if (trader.getID() == id) {
+                return trader;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Get a trader by its ID. If a trader with the specified ID does not exist,
+     * returns null.
+     * 
+     * @param brokerName the name of the trading broker
+     */
+    public TradingBroker getTrader(String brokerName) {
+        for (TradingBroker trader : traderList) {
+            if (trader.getName().equals(brokerName)) {
                 return trader;
             }
         }

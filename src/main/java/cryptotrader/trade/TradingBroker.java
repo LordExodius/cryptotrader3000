@@ -20,6 +20,7 @@ public class TradingBroker implements UpdateBroker, ExecuteTrade {
     private int numTrades;
     private ArrayList<String> coinList;
     private TradingStrategy strategy;
+    private boolean active;
 
     /**
      * Constructor
@@ -30,6 +31,7 @@ public class TradingBroker implements UpdateBroker, ExecuteTrade {
         this.numTrades = 0;
         this.coinList = new ArrayList<String>();
         this.strategy = null;
+        this.active = true;
     }
 
     /**
@@ -44,6 +46,11 @@ public class TradingBroker implements UpdateBroker, ExecuteTrade {
         this.numTrades = 0;
         this.coinList = new ArrayList<String>();
         this.strategy = null;
+    }
+
+    public TradingBroker(String brokerName) {
+        this();
+        this.name = brokerName;
     }
 
     /**
@@ -143,6 +150,14 @@ public class TradingBroker implements UpdateBroker, ExecuteTrade {
      * @return boolean
      */
     public boolean equals(TradingBroker other) {
-        return this.brokerID == other.brokerID;
+        return this.getName().equals(other.getName());
+    }
+
+    public boolean getActive() {
+        return this.active; 
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }
