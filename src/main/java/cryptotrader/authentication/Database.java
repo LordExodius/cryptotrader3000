@@ -18,7 +18,7 @@ import cryptotrader.view.TradeLog;
 import cryptotrader.view.TradeResult;
 
 public class Database implements DatabaseAuthenticate, GetFromDatabase, AddToDatabase {
-    // NOTE: Implement GetFromDatabase when TraderList and TradeLog are aded
+    // TODO: DELETE EXISTING USER ENTRIES BEFORE SAVING
 
     /**
      * Databse contains 3 tables:
