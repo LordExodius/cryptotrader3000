@@ -46,7 +46,6 @@ public class StrategyA extends TradingStrategy {
         ArrayList<String> interestedCoins = new ArrayList<>(coinsIn.keySet());
         if (!checkCoins(interestedCoins))
         {
-            // TODO: POPUP WHEN TRADE DOES NOT HAVE CORRECT INFORMATION
             new PopupUI(getName() + " does not have the required coin information to proceed.");
             return new TradeResult(null, this, "ADA", "Fail", 0, 0);
         }
