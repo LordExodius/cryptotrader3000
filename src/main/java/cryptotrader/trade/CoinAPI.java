@@ -15,6 +15,12 @@ import java.util.concurrent.TimeUnit;
 import java.util.ArrayDeque;
 import java.util.HashMap;
 
+/**
+ * A class CoinAPI that calls the CoinGecko API. It packages the info it receives in a HashMap
+ * of String and Coin.
+ * @author Jackson Howe
+ * @version 1.0
+ */
 
 public class CoinAPI {
 
@@ -130,7 +136,7 @@ public class CoinAPI {
 		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 		String date = formatter.format(rawDate);
 
-		// For each coin, get the relevant info, and add it to the outDate JsonObject
+		// For each coin, get the relevant info, and create a Coin object. Add this Coin to the coin list
 		for (String coin: dataIn) {
 			double price = this.getPriceForCoin(coin, date);
 			double marketCap = this.getMarketCapForCoin(coin, date);

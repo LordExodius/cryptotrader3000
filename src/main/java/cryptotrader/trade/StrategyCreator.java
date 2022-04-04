@@ -1,5 +1,11 @@
 package cryptotrader.trade;
 
+/**
+ * A factory class that creates the trading strategies
+ * @author Ben Asokanthan
+ * @version 1.0
+ */
+
 public class StrategyCreator implements Create {
 
     @Override
