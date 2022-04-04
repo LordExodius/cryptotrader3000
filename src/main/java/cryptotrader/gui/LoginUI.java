@@ -2,6 +2,7 @@ package cryptotrader.gui;
 
 import cryptotrader.authentication.Database;
 import cryptotrader.gui.MainUI;
+import cryptotrader.user.User;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -96,13 +97,23 @@ public class LoginUI extends JFrame implements ActionListener {
         
         if(database.authenticate(userField.getText(), passField.getText()))
         {
-            initMain();
+            initUser();
             loginFrame.dispatchEvent(e);
         }
         else
         {
             status.setText("Incorrect User Credentials");
         }   
+    }
+
+    private void initUser()
+    {
+        User user = User.getInstance();
+        user.setUsername(userField.getText());
+        user.setTraderList(database.getTraders());
+        user.setTradeLog(database.getTradeLog(user.getTraderList()));
+
+        initMain();
     }
 
     private void initMain()
