@@ -96,7 +96,6 @@ public class MainUI extends JFrame implements ActionListener {
 		TradeLog tradeLog = user.getTradeLog();
 		tradeLog.attach(tradeTable);
 		tradeLog.attach(tradeGraph);
-		tradeLog.notifyObservers();
 
 		TraderList traderList = user.getTraderList();
 		for (TradingBroker t : traderList.getList()) {
