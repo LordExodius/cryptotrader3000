@@ -25,7 +25,7 @@ public class TradingBroker implements UpdateBroker, ExecuteTrade {
         this.numTrades = 0;
         this.coinList = new ArrayList<String>();
         this.strategy = null;
-        this.active = true;
+        this.active = false;
     }
 
     public TradingBroker(String brokerName) {
