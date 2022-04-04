@@ -21,6 +21,12 @@ import java.awt.BorderLayout;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 
+/**
+ * A class that provides a user interface for the login mechanic
+ * and initializes the program when successful login occurs
+ * @author Oscar Yu
+ * @version 1.0
+ */
 public class LoginUI extends JFrame implements ActionListener {
 
     // Components

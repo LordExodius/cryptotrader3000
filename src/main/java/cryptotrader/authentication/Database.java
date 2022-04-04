@@ -17,6 +17,11 @@ import cryptotrader.user.User;
 import cryptotrader.view.TradeLog;
 import cryptotrader.view.TradeResult;
 
+/**
+ * A class that connects to and performs queries on the project database
+ * @author Oscar Yu, David Tran
+ * @version 1.0
+ */
 public class Database implements DatabaseAuthenticate, GetFromDatabase, AddToDatabase {
     // TODO: DELETE EXISTING USER ENTRIES BEFORE SAVING
 
@@ -105,6 +110,10 @@ public class Database implements DatabaseAuthenticate, GetFromDatabase, AddToDat
         return false;
     }
 
+    /**
+     * Returns the active instance of Database, or creates it if not initialized.
+     * @return active instance of Database object
+     */
     public static Database getInstance()
     {
         if(instance == null)
@@ -112,6 +121,10 @@ public class Database implements DatabaseAuthenticate, GetFromDatabase, AddToDat
         return instance;
     }
 
+    /**
+     * Stores TradingBroker objects in the database
+     * @param traders a TraderList object containing all the TradingBroker objects associated with the current User instance
+     */
     @Override
     public void addTraders(TraderList traders) {
         if(traders == null)
@@ -138,6 +151,10 @@ public class Database implements DatabaseAuthenticate, GetFromDatabase, AddToDat
         }
     }
 
+    /**
+     * Stores TradeResult objects in the database
+     * @param log a TradeLog object containing all TradeResult objects associated with current User instance
+     */
     @Override
     public void addTradeLog(TradeLog log) {
         if(log == null)
@@ -189,6 +206,13 @@ public class Database implements DatabaseAuthenticate, GetFromDatabase, AddToDat
                 list.addTrader(tempBroker);
             }
             System.out.println("Successfully retrieved trading broker data.");
+
+            // Remove all records associated with user to prevent duplication when saving next time
+            statement = connection.prepareStatement("DELETE FROM brokers WHERE user = ?");
+            statement.setString(1, User.getInstance().getUsername());
+            statement.executeUpdate();
+            System.out.println("Deleted user's broker data from database.");
+            
             return list;
         }
         catch(SQLException e)
@@ -234,6 +258,13 @@ public class Database implements DatabaseAuthenticate, GetFromDatabase, AddToDat
             }
             tradeLog.addResults(tradeResults);
             System.out.println("Successfully retrieved trade log data.");
+            
+            // Remove all records associated with user to prevent duplication when saving next time
+            statement = connection.prepareStatement("DELETE FROM results WHERE user = ?");
+            statement.setString(1, User.getInstance().getUsername());
+            statement.executeUpdate();
+            System.out.println("Deleted user's trade results data from database.");
+
             return tradeLog;
         } catch (SQLException e) {
             System.out.println("An SQL error has occured while retrieving trade log data:");
