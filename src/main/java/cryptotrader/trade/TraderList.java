@@ -16,15 +16,12 @@ import java.util.HashSet;
 public class TraderList implements UpdateTraderList {
 
     private ArrayList<TradingBroker> traderList;
-    // all coins that at least one trader is interested in
-    private HashSet<String> interestedCoins;
 
     /**
      * Constructor
      */
     public TraderList() {
         traderList = new ArrayList<TradingBroker>();
-        interestedCoins = new HashSet<String>();
     }
 
     @Override
@@ -35,12 +32,6 @@ public class TraderList implements UpdateTraderList {
     public boolean addTrader(TradingBroker newTrader) {
         if (!(traderList.contains(newTrader))) {
             traderList.add(newTrader);
-
-            for (String coin : newTrader.getCoinList()) {
-                if (!interestedCoins.contains(coin)) {
-                    interestedCoins.add(coin);
-                }
-            }
             return true;
         }
         return false;
@@ -118,6 +109,12 @@ public class TraderList implements UpdateTraderList {
      * @return interestedCoins
      */
     public HashSet<String> getInterestedCoins() {
+        HashSet<String> interestedCoins = new HashSet<String>();
+        for (TradingBroker trader : traderList) {
+            for (String coinName : trader.getCoinList()) {
+                interestedCoins.add(coinName);
+            }
+        }
         return interestedCoins;
     }
 

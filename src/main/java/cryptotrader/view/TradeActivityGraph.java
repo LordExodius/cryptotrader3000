@@ -57,7 +57,7 @@ public class TradeActivityGraph implements Observer {
 
         // Counts the number of actions performed by each TradingBroker.
         for (TradeResult entry : entries) {
-			if (entry == null)
+			if (entry == null || entry.getActionType().equals("Fail"))
 				continue;
             if (brokerActionsMap.containsKey(entry.getBroker())) {
                 HashMap<String, Integer> actions = brokerActionsMap.get(entry.getBroker());
