@@ -109,7 +109,12 @@ public class LoginUI extends JFrame implements ActionListener {
         }
         else
         {
-            status.setText("Incorrect User Credentials");
+            new PopupUI("Incorrect Login. The program will now terminate.") {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    loginFrame.dispatchEvent(new WindowEvent(loginFrame, WindowEvent.WINDOW_CLOSING));
+                }
+            };
         }   
     }
 
