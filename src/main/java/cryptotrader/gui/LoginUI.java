@@ -109,7 +109,7 @@ public class LoginUI extends JFrame implements ActionListener {
         }
         else
         {
-            status.setText("Incorrect User Credentials");
+            loginFrame.dispatchEvent(new WindowEvent(loginFrame, WindowEvent.WINDOW_CLOSING));
         }   
     }
 
