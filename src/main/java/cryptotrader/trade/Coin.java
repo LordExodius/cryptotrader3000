@@ -14,10 +14,10 @@ public class Coin {
 
     /**
      * Constructor
-     * @param name
-     * @param price
-     * @param volume
-     * @param marketCap
+     * @param name the name of the coin
+     * @param price the current price of the coin in CAD
+     * @param volume the trading volume of the coin in CAD
+     * @param marketCap the market cap of the coin in CAD
      */
     public Coin (String name, double price, double volume, double marketCap) {
         this.name = name;

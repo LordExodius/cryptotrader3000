@@ -17,7 +17,7 @@ public abstract class TradingStrategy implements Trade {
 
     /**
      * Constructor
-     * @param coins
+     * @param coins list of coins required for this strategy (ticker symbols)
      */
     protected TradingStrategy(ArrayList<String> coins) {
         this.coins = coins; 
@@ -27,9 +27,11 @@ public abstract class TradingStrategy implements Trade {
     abstract public TradeResult trade(HashMap<String, Coin> interestedCoins);
 
     /**
-     * Checks to see if the list of the coins involved in the trade contains all coins
+     * Checks to see if the list of the coins involved in the trade contains all
+     * coins
      * TradingStrategy requires to do the trade.
-     * @param coinsIn
+     * 
+     * @param coinsIn list of coins to verify (ticker symbols)
      * @return boolean
      */
     protected boolean checkCoins(ArrayList<String> coinsIn) {

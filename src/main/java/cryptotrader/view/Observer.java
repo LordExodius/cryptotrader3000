@@ -2,8 +2,11 @@ package cryptotrader.view;
 
 /**
  * Observer interface under the Observer pattern to be implemented by the
- * TradeActivityGraph and TradeActivityTable classes. The Observer pattern 
+ * TradeActivityGraph and TradeActivityTable classes. The Observer pattern
  * is used for the model view controller architectural style.
+ * 
+ * @author Ben Asokanthan
+ * @version 1.0
  */
 public interface Observer {
 

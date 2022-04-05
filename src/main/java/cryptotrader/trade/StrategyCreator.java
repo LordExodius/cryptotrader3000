@@ -12,7 +12,7 @@ public class StrategyCreator implements Create {
     /**
      * A method that chooses between creating one of strategy A, B, C, or D, based upon the parameter 
      * passed
-     * @param strategySelection
+     * @param strategySelection the name of the strategy to create (e.g. "Strategy-A")
      * @return Strategy object
      */
     public TradingStrategy create(String strategySelection) {

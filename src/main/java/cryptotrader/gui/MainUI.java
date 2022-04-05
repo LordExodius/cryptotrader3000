@@ -162,7 +162,7 @@ public class MainUI extends JFrame implements ActionListener {
 
 	/**
 	 * Update the JPanel containing the stats for the activity graph and trade log.
-	 * @param component
+	 * @param component The JComponent to update
 	 */
 	public void updateStats(JComponent component) {
 		stats.add(component);

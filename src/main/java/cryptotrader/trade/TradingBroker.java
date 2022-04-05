@@ -69,8 +69,9 @@ public class TradingBroker implements UpdateBroker, ExecuteTrade {
     /**
      * Calls the strategy's trade method. Returns null if no strategy exist
      * or the strategy is not satisfied.
-     * @param coinInfo
-     * @return TradeResult 
+     * 
+     * @param coinInfo A mapping from a coin name (e.g. BTC) to its coin info
+     * @return TradeResult
      */
     public TradeResult executeTrade(HashMap<String, Coin> coinInfo) {
         if (strategy != null) {
@@ -96,7 +97,7 @@ public class TradingBroker implements UpdateBroker, ExecuteTrade {
     @Override
     /**
      * Updates (changes) the trader's list of coins
-     * @param newCoins
+     * @param newCoins list of coins to update with (ticker symbols)
      */
     public void updateCoins(ArrayList<String> newCoins) {
         this.coinList = newCoins;
@@ -104,7 +105,7 @@ public class TradingBroker implements UpdateBroker, ExecuteTrade {
 
     /**
      * Method that adds a new coin to a trader's list
-     * @param newCoin
+     * @param newCoin coin to add (ticker symbol)
      */
     public void addCoin(String newCoin) {
         if (!coinList.contains(newCoin)) {
@@ -114,7 +115,7 @@ public class TradingBroker implements UpdateBroker, ExecuteTrade {
     @Override
     /**
      * Changes the trader's trading strategy
-     * @param strategy
+     * @param strategy strategy object with which to update the trader
      */
     public void updateStrategy(TradingStrategy strategy) {
        this.strategy = strategy;
@@ -122,7 +123,7 @@ public class TradingBroker implements UpdateBroker, ExecuteTrade {
 
     /**
      * Sets the number of trades this trader has completed
-     * @param numTrades
+     * @param numTrades number of trades this trader has completed
      */
     public void setNumTrades(int numTrades)
     {
@@ -131,17 +132,25 @@ public class TradingBroker implements UpdateBroker, ExecuteTrade {
 
     /**
      * Compares if two traders are the same
-     * @param other
+     * @param other trader to with which to compare
      * @return boolean
      */
     public boolean equals(TradingBroker other) {
         return this.getName().equals(other.getName());
     }
 
+    /**
+     * Get the active state of this trader.
+     * @return true if the trader is active, otherwise false
+     */
     public boolean getActive() {
         return this.active; 
     }
 
+    /**
+     * Set the active state of this trader.
+     * @param active active state to set
+     */
     public void setActive(boolean active) {
         this.active = active;
     }

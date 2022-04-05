@@ -30,7 +30,7 @@ public class TraderList implements UpdateTraderList {
     @Override
     /**
      * Method that checks if a trader to be added is already in the trade list, then adds it in
-     * @param newTrader
+     * @param newTrader the trader to add to the list
      */
     public boolean addTrader(TradingBroker newTrader) {
         if (!(traderList.contains(newTrader))) {
@@ -49,7 +49,7 @@ public class TraderList implements UpdateTraderList {
     @Override
     /**
      * A method that removes and returns a specified trader
-     * @param brokerID
+     * @param brokerName the trader to remove from the list
      * @return removedTrader
      */
     public TradingBroker removeTrader(String brokerName) {
@@ -69,8 +69,10 @@ public class TraderList implements UpdateTraderList {
     @Override
     /**
      * Method that adds a coin to a broker in the trader list
-     * @param brokerID
-     * @param newCoin
+     * 
+     * @param brokerName name of the trader to update
+     * @param newCoins   list of coin names (tickers) that this trader is interested
+     *                   in
      * @return boolean
      */
     public boolean updateCoins(String brokerName, ArrayList<String> newCoins) {
@@ -86,8 +88,10 @@ public class TraderList implements UpdateTraderList {
     @Override
     /**
      * Method that updates a trader's strategy
-     * @param brokerID
-     * @param strategy
+     * 
+     * @param brokerName name of the trader to update
+     * @param strategy   list of coin names (tickers) that this trader is interested
+     *                   in
      * @return boolean
      */
     public boolean updateStrategy(String brokerName, TradingStrategy strategy) {
@@ -122,6 +126,7 @@ public class TraderList implements UpdateTraderList {
      * returns null.
      * 
      * @param brokerName the name of the trading broker
+     * @return The trading broker with the specified name.
      */
     public TradingBroker getTrader(String brokerName) {
         for (TradingBroker trader : traderList) {
