@@ -201,29 +201,29 @@ public class CoinAPI {
 		// }
 
 		// Test 2
-		for (int i = 0; i < 60; i++) {
-			try {
-				test.getData(testIn);
-				System.out.println("Call " + i + " passed");
-			} catch (CoinAPIException e) {
-				System.out.println("Call " + i + " blocked");
-			}
-		}
+		// for (int i = 0; i < 60; i++) {
+		// 	try {
+		// 		test.getData(testIn);
+		// 		System.out.println("Call " + i + " passed");
+		// 	} catch (CoinAPIException e) {
+		// 		System.out.println("Call " + i + " blocked");
+		// 	}
+		// }
 
-		// CoinAPI fetcher = new CoinAPI();
-		// double price = fetcher.getPriceForCoin("bitcoin", "08-09-2021");
-		// double marketCap = fetcher.getMarketCapForCoin("bitcoin", "08-09-2021");
-		// double volume = fetcher.getVolumeForCoin("bitcoin", "08-09-2021");
+		CoinAPI fetcher = new CoinAPI();
+		double price = fetcher.getPriceForCoin("bitcoin", "04-04-20222");
+		double marketCap = fetcher.getMarketCapForCoin("bitcoin", "04-04-2022");
+		double volume = fetcher.getVolumeForCoin("bitcoin", "04-04-2022");
 		
-		// System.out.println("Bitcoin=>\tPrice: " + price + 
-		// 						"\n\t\tMarket Cap: " + marketCap + 
-		// 						"\n\t\tVolume: "+volume);
+		System.out.println("Bitcoin=>\tPrice: " + price + 
+								"\n\t\tMarket Cap: " + marketCap + 
+								"\n\t\tVolume: "+volume);
 
-		// ArrayList<String> test = new ArrayList<String>();
-		// test.add("bitcoin");
-		// test.add("ethereum");
+		ArrayList<String> test1 = new ArrayList<String>();
+		test1.add("bitcoin");
+		test1.add("ethereum");
 
-		// System.out.println(fetcher.getData(test));
+		System.out.println(fetcher.getData(test1));
 		
 	}
 }

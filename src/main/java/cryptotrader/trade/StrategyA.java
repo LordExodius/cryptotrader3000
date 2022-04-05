@@ -49,14 +49,28 @@ public class StrategyA extends TradingStrategy {
             new PopupUI(getName() + " does not have the required coin information to proceed.");
             return new TradeResult(null, this, "ADA", "Fail", 0, 0);
         }
-            
+        
 
         double adaPrice = coinsIn.get("ADA").getPrice();
-        if (coinsIn.get("BTC").getPrice() <= 50000 && adaPrice > 2) {
-            TradeResult res = new TradeResult(null, this, "ADA", "buy", 10, Math.round(adaPrice*100.0)/100.0);
+        if (coinsIn.get("BTC").getPrice() <= 60000 && adaPrice < 2) {
+            TradeResult res = new TradeResult(null, this, "ADA", "buy", 10, Math.round(adaPrice * 100.0) / 100.0);
             return res;
         }
         return null;
+    }
+
+    public static void main (String[] args) {
+        StrategyA s1 = new StrategyA();
+        Coin c1 = new Coin("ADA", 1.23, 34089.23, 234.08);
+        Coin c2 = new Coin("BTC", 46000.00, 34089.23, 234.08);
+        HashMap<String, Coin> test = new HashMap<>();
+        test.put("BTC", c2);
+        test.put("ADA", c1);
+        if (s1.trade(test) != null) {
+            System.out.println("Test passed");
+        } else {
+            System.out.println("Test failed");
+        }
     }
 
 }
