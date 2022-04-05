@@ -16,7 +16,7 @@ Crypto paper-trading application. Built using Java, Swing, and SQLite.
 
 ### Docs
 
-The javadocs can be viewed at `docs/index.html` or [LordExodius.github.io/cryptotrader3000](https://LordExodius.github.io/cryptotrader3000).
+The javadocs can be viewed at `docs/index.html`.
 
 ### Who do I talk to?
 
