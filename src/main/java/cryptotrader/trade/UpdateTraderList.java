@@ -4,8 +4,10 @@ import java.util.ArrayList;
 
 /**
  * An interface that performs operations on the current list of trading brokers
+ * 
+ * @author Jackson Howe
+ * @version 1.0
  */
-
 public interface UpdateTraderList {
     /**
      * A method that adds a trading broker to the trader list

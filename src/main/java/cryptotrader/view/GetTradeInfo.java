@@ -3,6 +3,13 @@ package cryptotrader.view;
 import cryptotrader.trade.TradingBroker;
 import cryptotrader.trade.TradingStrategy;
 
+/**
+ * An interface to be implemented by a class that allows the retrieval
+ * of details regarding a trade.
+ * 
+ * @author Ben Asokanthan
+ * @version 1.0
+ */
 public interface GetTradeInfo {
     /**
      * Getter method for the TradingBroker associated with the trade.

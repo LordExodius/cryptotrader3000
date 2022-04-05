@@ -6,6 +6,9 @@ import java.util.HashMap;
 
 /**
  * A method that allows each TradingStrategy obejct to perform trading logic
+ * 
+ * @author Jackson Howe
+ * @version 1.0
  */
 
 public interface Trade {

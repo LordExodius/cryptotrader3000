@@ -24,7 +24,7 @@ public class TradeLog extends Subject implements UpdateTradeLog {
 
     /**
      * Add trade results to all observers (UI elements)
-     * @param tradeResults
+     * @param tradeResults The list of TradeResults to add to the TradeLog.
      */
     public void addResults(ArrayList<TradeResult> tradeResults) {
         entries.addAll(tradeResults);

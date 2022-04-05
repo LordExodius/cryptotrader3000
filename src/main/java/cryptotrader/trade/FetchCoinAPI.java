@@ -5,6 +5,9 @@ import java.util.ArrayList;
 
 /**
  * An interface that CoinAPI uses to get data from the CoinGecko API
+ * 
+ * @author Jackson Howe
+ * @version 1.0
  */
 
 public interface FetchCoinAPI {

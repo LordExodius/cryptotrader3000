@@ -1,5 +1,12 @@
 package cryptotrader.view;
 
+/**
+ * An interface to be implemented by a Subject (Observer design pattern)
+ * that allows the attaching and detaching of observers.
+ * 
+ * @author Ben Asokanthan
+ * @version 1.0
+ */
 public interface ModifyObservers {
     /**
      * Attaches an observer to this subject, which adds the observer

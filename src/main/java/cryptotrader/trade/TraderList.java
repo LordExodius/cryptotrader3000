@@ -126,6 +126,7 @@ public class TraderList implements UpdateTraderList {
      * returns null.
      * 
      * @param brokerName the name of the trading broker
+     * @return The trading broker with the specified name.
      */
     public TradingBroker getTrader(String brokerName) {
         for (TradingBroker trader : traderList) {

@@ -5,6 +5,9 @@ import cryptotrader.view.TradeResult;
 
 /**
  * An interface provided by TradingStrategy for TradingBroker to use
+ * 
+ * @author Jackson Howe
+ * @version 1.0
  */
 
 public interface ExecuteTrade {

@@ -2,8 +2,10 @@ package cryptotrader.trade;
 
 /**
  * An interface for the abstract trading strategy class
+ * 
+ * @author Jackson Howe
+ * @version 1.0
  */
-
 public interface Create {
     /**
      * A factory method that dynamically decides on which child trading strategy to create.

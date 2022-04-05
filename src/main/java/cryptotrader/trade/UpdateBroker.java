@@ -3,6 +3,9 @@ import java.util.ArrayList;
 
 /**
  * An interface for changing broker info
+ * 
+ * @author Jackson Howe
+ * @version 1.0
  */
 
 public interface UpdateBroker {

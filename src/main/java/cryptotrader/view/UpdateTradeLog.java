@@ -2,6 +2,13 @@ package cryptotrader.view;
 
 import java.util.ArrayList;
 
+/**
+ * An interface to be implemented by a class that allows the updating of its
+ * trade log.
+ * 
+ * @author Ben Asokanthan
+ * @version 1.0
+ */
 public interface UpdateTradeLog {
 
      /**
