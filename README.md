@@ -3,7 +3,7 @@
 ### Description
 Crypto paper-trading application. Built using Java, Swing, and SQLite.
 
-### How do I get set up? ###
+### How do I get set up?
 
 1. Clone the repository with `git https://github.com/LordExodius/cryptotrader3000`.
 2. Navigate to the root directory of the repository (`cryptotrader3000/`)
@@ -12,7 +12,13 @@ Crypto paper-trading application. Built using Java, Swing, and SQLite.
 `java -jar ./target/cryptotrader-1.0-jar-with-dependencies.jar`
 5. Login to the system with either `username: admin; password: password` or `username: oscar; password: notpassword`
 
-### Who do I talk to? ###
+* The main entry point is located in `src/main/java/cryptotrader/gui/LoginUI.java`
+
+### Docs
+
+The javadocs can be viewed at `docs/index.html` or [LordExodius.github.io/cryptotrader3000](https://LordExodius.github.io/cryptotrader3000).
+
+### Who do I talk to?
 
 * Oscar
 * David
