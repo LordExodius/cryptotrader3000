@@ -9,7 +9,7 @@ Crypto paper-trading application. Built using Java, Swing, and SQLite.
 2. Navigate to the root directory of the repository (`cryptotrader3000/`)
 3. Run the maven build command `mvn package` or `mvn install`
 4. Navigate to the target folder `cryptotrader3000/target/` and run the compiled `.jar` executable with
-`java -jar cryptotrdaer-1.0.jar`
+`java -jar cryptotrader-1.0.jar`
 
 
 ### Who do I talk to? ###
