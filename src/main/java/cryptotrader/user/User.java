@@ -80,7 +80,7 @@ public class User {
 
     /**
      * set the User's username
-     * @param username
+     * @param username username of the user
      */
     public void setUsername(String username) {
         this.username = username;
@@ -88,7 +88,7 @@ public class User {
 
     /**
      * Set the trade log
-     * @param tradeLog
+     * @param tradeLog trade log object to set
      */
     public void setTradeLog(TradeLog tradeLog) {
         this.tradeLog = tradeLog;
@@ -96,7 +96,7 @@ public class User {
 
     /**
      * Set the trader list
-     * @param traderList
+     * @param traderList trader list object to set 
      */
     public void setTraderList(TraderList traderList) {
         this.traderList = traderList;

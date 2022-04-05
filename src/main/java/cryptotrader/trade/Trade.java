@@ -10,9 +10,8 @@ import java.util.HashMap;
 
 public interface Trade {
     /**
-     * A method that allows the subclasses of TradingStrategy to perform trading logic. It returns an object of 
-     * type TradeResult if successful
-     * @param interestedCoins
+     * Perform a trade given a collection of coins and their info.
+     * @param interestedCoins a mapping from a coin's ticker symbol (e.g. BTC) to its coin info
      * @return TradeResult, either a successful trade result or a null trade result if the trade was unsuccessful
      */
     public TradeResult trade(HashMap<String, Coin> interestedCoins);

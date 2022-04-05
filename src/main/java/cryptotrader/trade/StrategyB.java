@@ -41,7 +41,8 @@ public class StrategyB extends TradingStrategy {
     /**
      * A method that performs trading logic for Strategy B
      * 
-     * @param coinsIn
+     * @param coinsIn a mapping from a coin's ticker symbol (e.g. BTC) to its coin
+     *                info
      * @return res
      */
     public TradeResult trade(HashMap<String, Coin> coinsIn) {

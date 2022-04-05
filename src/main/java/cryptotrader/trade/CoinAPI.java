@@ -72,7 +72,7 @@ public class CoinAPI {
 	 * @param id   the CoinGecko id for a cryptocoin (e.g. bitcoin, solana, etc.)
 	 * @param date the date of the info that should be retrieved
 	 * @return the price in CAD
-	 * @throws CoinAPIException
+	 * @throws CoinAPIException throws if the CoinGecko API GET request fails
 	 */
 	public double getPriceForCoin(String id, String date) throws CoinAPIException {
 		double price = 0.0;
@@ -93,7 +93,7 @@ public class CoinAPI {
 	 * @param id   the CoinGecko id for a cryptocoin (e.g. bitcoin, solana, etc.)
 	 * @param date the date of the info that should be retrieved
 	 * @return the market cap in CAD
-	 * @throws CoinAPIException
+	 * @throws CoinAPIException throws if the CoinGecko API GET request fails
 	 */
 	public double getMarketCapForCoin(String id, String date) throws CoinAPIException {
 		double marketCap = 0.0;
@@ -114,7 +114,7 @@ public class CoinAPI {
 	 * @param id   the CoinGecko id for a cryptocoin (e.g. bitcoin, solana, etc.)
 	 * @param date the date of the info that should be retrieved
 	 * @return the trading volume in CAD.
-	 * @throws CoinAPIException
+	 * @throws CoinAPIException throws if the CoinGecko API GET request fails
 	 */
 	public double getVolumeForCoin(String id, String date) throws CoinAPIException {
 		double volume = 0.0;
@@ -134,7 +134,7 @@ public class CoinAPI {
 	/**
 	 * Takes in the 3 letter name identifier of a coin and creates coin objects from the API call, then returns the map of coins
 	 * 
-	 * @param dataIn
+	 * @param dataIn The list of coins for which to fetch data. The coin name should be its ticker symbol (e.g. BTC)
 	 * @return outData
 	 */
 	public HashMap<String, Coin> getData (ArrayList<String> dataIn) throws CoinAPIException {
