@@ -55,7 +55,7 @@ public class StrategyD extends TradingStrategy {
             
         // Trading logic
         if (coinsIn.get("LTC").getPrice() >= 123) {
-            TradeResult res = new TradeResult(null, this, "SOL", "sell", 234,
+            TradeResult res = new TradeResult(null, this, "SOL", "Sell", 234,
                     Math.round((coinsIn.get("SOL").getPrice())*100.0)/100.0);
             return res;
         }
