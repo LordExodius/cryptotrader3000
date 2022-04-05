@@ -48,14 +48,13 @@ public class StrategyD extends TradingStrategy {
 
         if (!checkCoins(interestedCoins))
         {
-            // TODO: POPUP WHEN TRADE DOES NOT HAVE CORRECT INFORMATION
             new PopupUI(getName() + " does not have the required coin information to proceed.");
             return new TradeResult(null, this, "SOL", "Fail", 0, 0);
         }
             
         // Trading logic
         if (coinsIn.get("LTC").getPrice() >= 123) {
-            TradeResult res = new TradeResult(null, this, "SOL", "sell", 234,
+            TradeResult res = new TradeResult(null, this, "SOL", "Sell", 234,
                     Math.round((coinsIn.get("SOL").getPrice())*100.0)/100.0);
             return res;
         }
