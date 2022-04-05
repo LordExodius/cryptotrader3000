@@ -26,6 +26,16 @@ Login to the system with either
 
 The javadocs can be viewed at `docs/index.html`.
 
+### Details
+
+Each strategy requires different coins to properly execute.
+* Strategy A: BTC, ADA
+* Strategy B: LTC, ADA, SOL
+* Strategy C: ETH, BTC, ADA
+* Strategy D: LTC, SOL
+
+The API is limited to 50 API calls per minute. Note that up to 5 different coins can be chosen and each coin requires 3 API calls each to gather all required info, so one full "Perform Trades" can execute up to 15 API calls.
+
 ### Who do I talk to?
 
 * Oscar
